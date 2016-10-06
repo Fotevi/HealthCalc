@@ -71,7 +71,6 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
                 if(tab.equals(mTlKgLbs.getTabAt(0))) {
                     Toast.makeText(ctx, String.valueOf(tab.getTag()), Toast.LENGTH_SHORT).show();
                     mTlMetersFeet.getTabAt(0).select();
-
                 }
 
         }catch (Exception ex){
