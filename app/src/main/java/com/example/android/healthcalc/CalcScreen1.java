@@ -2,6 +2,7 @@ package com.example.android.healthcalc;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class CalcScreen1 extends AppCompatActivity implements View.OnClickListener{
+public class CalcScreen1 extends AppCompatActivity implements View.OnClickListener,TabLayout.OnTabSelectedListener{
 
     private Context ctx=this;
     private EditText mEtYears, mEtMetersFeet, mEtCmInch, mEtKgLbs ;
@@ -17,6 +18,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private Intent mIntnGoToCalcScreen2;
     private int mYears, mMeters, mCentimeters, mKilograms;
     private boolean mIsMale, mAreMeters, mAreKilograms;
+    private TabLayout mTlMetersFeet, mTlKgLbs;
 
 
     protected void init(){
@@ -25,6 +27,8 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         mEtCmInch=(EditText)findViewById(R.id.et_calc_screen1_meters_feet);
         mEtKgLbs=(EditText)findViewById(R.id.et_calc_screen1_kg_lbs);
         mBtnGoToCalcScreen2=(Button)findViewById(R.id.btn_calc_screen1_go_calc_screen2);
+        mTlMetersFeet=(TabLayout)findViewById(R.id.tl_calc_screen1_meters_feet);
+        mTlKgLbs=(TabLayout)findViewById(R.id.tl_calc_screen1_lbs_kg);
     }
 
     @Override
@@ -35,6 +39,8 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         init();
 
         mBtnGoToCalcScreen2.setOnClickListener((View.OnClickListener) ctx);
+        mTlMetersFeet.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
+        mTlKgLbs.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
 
 
 
@@ -56,6 +62,29 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
 
         }
+
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        try {
+                if(tab.equals(mTlKgLbs.getTabAt(0))) {
+                    Toast.makeText(ctx, String.valueOf(tab.getTag()), Toast.LENGTH_SHORT).show();
+                    mTlMetersFeet.getTabAt(0).select();
+                }
+
+        }catch (Exception ex){
+
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
 
     }
 }
