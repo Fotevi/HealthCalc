@@ -10,6 +10,6 @@ public class CalcScreen2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc_screen2);
 
-        //rrrrrrrrrrrrrrrrrrr
+        //rrrrrrrrrrrrrrrrrrrrrrrrr
     }
 }
