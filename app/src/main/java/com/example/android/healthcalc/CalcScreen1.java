@@ -16,18 +16,25 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private EditText mEtYears, mEtMetersFeet, mEtCmInch, mEtKgLbs ;
     private Button mBtnGoToCalcScreen2;
     private Intent mIntnGoToCalcScreen2;
-    private int mYears, mMeters, mCentimeters, mKilograms;
-    private boolean mIsMale, mAreMeters, mAreKilograms;
+    private int mIntYears, mIntMetter, mIntCentimeters, mIntKilograms;
+    private boolean mBoolIsMale, mBoolAreMeters, mBoolAreKilograms;
     private TabLayout mTlMetersFeet, mTlKgLbs;
 
 
     protected void init(){
+        //Edit Text for entering years
         mEtYears=(EditText)findViewById(R.id.et_calc_screen1_years);
+        //Edit Text for height - Meter or Feet
         mEtMetersFeet=(EditText)findViewById(R.id.et_calc_screen1_meters_feet);
+        //Edit Text for height - Centimeter or Inch
         mEtCmInch=(EditText)findViewById(R.id.et_calc_screen1_meters_feet);
+        //Edit Text for weight - kg or lbs
         mEtKgLbs=(EditText)findViewById(R.id.et_calc_screen1_kg_lbs);
+        //Button to go to class CalcScreen2
         mBtnGoToCalcScreen2=(Button)findViewById(R.id.btn_calc_screen1_go_calc_screen2);
+        //Tab Layout to choose Meters or Feets
         mTlMetersFeet=(TabLayout)findViewById(R.id.tl_calc_screen1_meters_feet);
+        //Tab Layout to choose Kg or Lbs
         mTlKgLbs=(TabLayout)findViewById(R.id.tl_calc_screen1_lbs_kg);
     }
 
@@ -38,6 +45,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
         init();
 
+        //Setting onClick and onTabSelected Listeners
         mBtnGoToCalcScreen2.setOnClickListener((View.OnClickListener) ctx);
         mTlMetersFeet.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
         mTlKgLbs.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
@@ -49,12 +57,15 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+
+        //When mBtnGoToCalcScreen2( id = btn_calc_screen1_go_calc_screen2) is clicked -> go to CalcScreen2.class
         if(view.getId()==R.id.btn_calc_screen1_go_calc_screen2){
 
             try {
-                mYears = Integer.parseInt(mEtYears.getText().toString());
+                mIntYears = Integer.parseInt(mEtYears.getText().toString());
 
                 mIntnGoToCalcScreen2=new Intent(ctx,CalcScreen2.class);
+
                 startActivity(mIntnGoToCalcScreen2);
             }catch (Exception ex){
                 Toast.makeText(ctx, "Wrong input", Toast.LENGTH_SHORT).show();
@@ -67,6 +78,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        //verifying that user data is only in metric or only in imperial
         try {
                 if(tab.equals(mTlKgLbs.getTabAt(0))) {
                     mTlMetersFeet.getTabAt(0).select();
