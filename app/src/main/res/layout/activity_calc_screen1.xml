@@ -23,7 +23,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/years"
+        android:hint="@string/years"
         android:id="@+id/et_calc_screen1_years"
         android:inputType="number"
         android:maxLines="1"
@@ -110,8 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/et_calc_screen1_meters_feet"
-            android:text="@string/meters"
+            android:hint="@string/meters"
             android:maxLines="1"
+            android:inputType="number"
             />
         <!--EditText for inches or centimeters
         depending on chosen option-->
@@ -120,8 +121,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/et_calc_screen1_sm_inch"
-            android:text="@string/centimeters"
+            android:hint="@string/centimeters"
             android:maxLines="1"
+            android:inputType="number"
             />
 
     </LinearLayout>
@@ -158,14 +160,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/et_calc_screen1_kg_lbs"
-        android:text="@string/kilograms"
+        android:hint="@string/kilograms"
         android:maxLines="1"
+        android:inputType="numberDecimal"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="temp"
+        android:text="@string/next"
         android:id="@+id/btn_calc_screen1_go_calc_screen2"
         />
 
