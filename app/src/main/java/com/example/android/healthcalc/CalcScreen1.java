@@ -17,7 +17,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private Button mBtnGoToCalcScreen2;
     private Intent mIntnGoToCalcScreen2;
     private int mIntYears, mIntMetter, mIntCentimeters, mIntKilograms;
-    private boolean mBoolIsMale, mBoolAreMeters, mBoolAreKilograms;
+    private boolean mBoolIsMale, mBoolMetrOrImper;
     private TabLayout mTlMetersFeet, mTlKgLbs;
 
 
@@ -36,6 +36,10 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         mTlMetersFeet=(TabLayout)findViewById(R.id.tl_calc_screen1_meters_feet);
         //Tab Layout to choose Kg or Lbs
         mTlKgLbs=(TabLayout)findViewById(R.id.tl_calc_screen1_lbs_kg);
+
+        //Initial values
+        mBoolIsMale = true;
+        mBoolMetrOrImper = true;
     }
 
     @Override
