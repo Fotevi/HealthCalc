@@ -23,7 +23,7 @@ public class CalcScreen2 extends AppCompatActivity {
         mDoubleWeight = mIntentFromCalcScreen1.getDoubleExtra("Weight",0.00);
     }
 
-    public double calculateDailyCalories(View view){
+    public void calculateDailyCalories(View view){
 
         /*W = weight in kilograms (weight (lbs)/2.2) =weight in kg
         H = height in centimeters (inches x 2.54) =height in cm
@@ -38,6 +38,5 @@ public class CalcScreen2 extends AppCompatActivity {
             mDoubleDailyCalories = 665.09 + (9.56 * mDoubleWeight) + (1.84 * mDoubleHeight) - (4.67 * mIntAge);
         }
 
-        return mDoubleDailyCalories;
     }
 }
