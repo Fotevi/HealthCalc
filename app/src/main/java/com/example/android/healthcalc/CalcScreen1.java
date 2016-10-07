@@ -19,7 +19,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private int mIntYears;
     private double mDoubleWeight, mDoubleHeight;
     private boolean mBoolIsMale, mBoolMetrOrImper; //mBoolMetrOrImper true = Metric , false = Imperial
-    private TabLayout mTlMetersFeet, mTlKgLbs;
+    private TabLayout mTlMetersFeet, mTlKgLbs, mTlMaleFemale;
 
 
     protected void init() {
@@ -36,7 +36,9 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         //Tab Layout to choose Meters or Feets
         mTlMetersFeet = (TabLayout) findViewById(R.id.tl_calc_screen1_meters_feet);
         //Tab Layout to choose Kg or Lbs
-        mTlKgLbs = (TabLayout) findViewById(R.id.tl_calc_screen1_lbs_kg);
+        mTlKgLbs=(TabLayout)findViewById(R.id.tl_calc_screen1_lbs_kg);
+        //Tab Layout to choose Male or Female
+        mTlMaleFemale=(TabLayout)findViewById(R.id.tl_calc_screen1_male_female);
 
         //Initial values
         mBoolIsMale = true;
@@ -54,6 +56,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         mBtnGoToCalcScreen2.setOnClickListener((View.OnClickListener) ctx);
         mTlMetersFeet.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
         mTlKgLbs.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
+
 
 
     }
@@ -101,21 +104,35 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         //verifying that user data is only in metric or only in imperial
-        try {
-            if (tab.equals(mTlKgLbs.getTabAt(0))) {
-                mTlMetersFeet.getTabAt(0).select();
-            } else if (tab.equals(mTlKgLbs.getTabAt(1))) {
-                mTlMetersFeet.getTabAt(1).select();
-            } else if (tab.equals(mTlMetersFeet.getTabAt(1))) {
-                mTlKgLbs.getTabAt(1).select();
-            } else if (tab.equals(mTlMetersFeet.getTabAt(0))) {
-                mTlKgLbs.getTabAt(0).select();
-            }
+        //the tab layouts for meters/feet and kg/lbs are connected
 
-        } catch (Exception ex) {
-
+        //Kilograms is selected
+        if (tab.equals(mTlKgLbs.getTabAt(0))) {
+            mTlMetersFeet.getTabAt(0).select();
+            mBoolMetrOrImper = true;
+        //Pounds are selected
+        } else if (tab.equals(mTlKgLbs.getTabAt(1))) {
+            mTlMetersFeet.getTabAt(1).select();
+            mBoolMetrOrImper = false;
+        //Meters are selected
+        } else if (tab.equals(mTlMetersFeet.getTabAt(0))) {
+            mTlKgLbs.getTabAt(0).select();
+            mBoolMetrOrImper = true;
+        //Feet are selected
+        } else if (tab.equals(mTlMetersFeet.getTabAt(1))) {
+            mTlKgLbs.getTabAt(1).select();
+            mBoolMetrOrImper = false;
+        //Male is selected
+        } else if (tab.equals(mTlMaleFemale.getTabAt(0))) {
+            mBoolIsMale = true;
+        //Female is selected
+        } else if (tab.equals(mTlMaleFemale.getTabAt(1))) {
+            mBoolIsMale = false;
         }
+
     }
+
+
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
