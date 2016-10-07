@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:text="@string/meters"
             android:id="@+id/ti_calc_screen1_meters"
+            android:tag="ti_calc_screen1_meters"
             />
         <!--TabItem for feet-->
         <android.support.design.widget.TabItem
@@ -90,6 +91,7 @@
             android:layout_height="wrap_content"
             android:text="@string/feet"
             android:id="@+id/ti_calc_screen1_feet"
+            android:tag="ti_calc_screen1_feet"
             />
 
     </android.support.design.widget.TabLayout>
@@ -137,6 +139,7 @@
             android:layout_height="wrap_content"
             android:text="@string/kilograms"
             android:id="@+id/ti_calc_screen1_kg"
+            android:tag="ti_calc_screen1_kg"
             />
 
         <!--TabItem for pounds-->
@@ -145,6 +148,7 @@
             android:layout_height="wrap_content"
             android:text="@string/pounds"
             android:id="@+id/ti_calc_screen1_lbs"
+            android:tag="ti_calc_screen1_lbs"
             />
 
     </android.support.design.widget.TabLayout>
