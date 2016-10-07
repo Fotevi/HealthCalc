@@ -1,5 +1,6 @@
 package com.example.android.healthcalc;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
+    private Context ctx=this;
     private Intent mIntentFromCalcScreen1;
     private int mIntAge;
     private boolean mBoolIsMale;
@@ -24,6 +26,7 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
         mBoolIsMale = mIntentFromCalcScreen1.getBooleanExtra("Gender",true);
         mDoubleHeight = mIntentFromCalcScreen1.getDoubleExtra("Height",0.00);
         mDoubleWeight = mIntentFromCalcScreen1.getDoubleExtra("Weight",0.00);
+        mRgActivityLvl.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener) ctx);
     }
 
     protected void init(){
@@ -50,15 +53,15 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_low){
+        if(i==R.id.rb_calc_screen2_low){
             mDoubleActivityLvl=1.25;
-        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_light){
+        }else if(i==R.id.rb_calc_screen2_light){
             mDoubleActivityLvl=1.375;
-        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_moderate){
+        }else if(i==R.id.rb_calc_screen2_moderate){
             mDoubleActivityLvl=1.55;
-        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_active){
+        }else if(i==R.id.rb_calc_screen2_active){
             mDoubleActivityLvl=1.725;
-        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_extreme){
+        }else if(i==R.id.rb_calc_screen2_extreme){
             mDoubleActivityLvl=1.9;
         }
 
