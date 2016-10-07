@@ -4,23 +4,31 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-public class CalcScreen2 extends AppCompatActivity {
+public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
     private Intent mIntentFromCalcScreen1;
     private int mIntAge;
     private boolean mBoolIsMale;
-    private double mDoubleHeight, mDoubleWeight , mDoubleDailyCalories;
+    private double mDoubleHeight, mDoubleWeight , mDoubleDailyCalories, mDoubleActivityLvl;
+    private RadioGroup mRgActivityLvl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc_screen2);
+        init();
 
-        mIntentFromCalcScreen1 = new Intent();
         mIntAge = mIntentFromCalcScreen1.getIntExtra("Age",0);
         mBoolIsMale = mIntentFromCalcScreen1.getBooleanExtra("Gender",true);
         mDoubleHeight = mIntentFromCalcScreen1.getDoubleExtra("Height",0.00);
         mDoubleWeight = mIntentFromCalcScreen1.getDoubleExtra("Weight",0.00);
+    }
+
+    protected void init(){
+        mIntentFromCalcScreen1 = new Intent();
+        mRgActivityLvl=(RadioGroup)findViewById(R.id.rg_calc_screen2_activity_lvl);
     }
 
     public void calculateDailyCalories(View view){
@@ -37,6 +45,23 @@ public class CalcScreen2 extends AppCompatActivity {
         }else{
             mDoubleDailyCalories = 665.09 + (9.56 * mDoubleWeight) + (1.84 * mDoubleHeight) - (4.67 * mIntAge);
         }
+
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_low){
+            mDoubleActivityLvl=1.25;
+        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_light){
+            mDoubleActivityLvl=1.375;
+        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_moderate){
+            mDoubleActivityLvl=1.55;
+        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_active){
+            mDoubleActivityLvl=1.725;
+        }else if(mRgActivityLvl.getCheckedRadioButtonId()==R.id.rb_calc_screen2_extreme){
+            mDoubleActivityLvl=1.9;
+        }
+
 
     }
 }
