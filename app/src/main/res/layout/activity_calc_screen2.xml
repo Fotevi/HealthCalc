@@ -8,5 +8,46 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.healthcalc.CalcScreen2">
+    
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        
+        <RadioButton
+            android:id="@+id/rb_calc_screen2_low"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/low"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen2_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/light"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen2_moderate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/moderate"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen2_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/active"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen2_extreme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/extreme"
+            />
+
+        
+
+    </RadioGroup>
 
 </RelativeLayout>
