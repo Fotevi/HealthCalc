@@ -3,6 +3,7 @@ package com.example.android.healthcalc;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Path;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 
 public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private Context ctx = this;
-    private Intent mIntentFromCalcScreen1;
+    private Intent mIntentFromCalcScreen1, mIntentToOpenActivity;
     private int mIntAge;
     private boolean mBoolIsMale;
     private float mFloatHeight, mFloatWeight, mFloatDailyCalories, mFloatActivityLvl;
@@ -40,7 +41,7 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
     protected void init() {
         mIntentFromCalcScreen1 = new Intent();
         mRgActivityLvl = (RadioGroup) findViewById(R.id.rg_calc_screen2_activity_lvl);
-        mSharPref = getSharedPreferences("MySharedPrefs",Context.MODE_PRIVATE);
+        mSharPref = getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE);
         mSharPrefEditor = mSharPref.edit();
         mBtnCalcCals = (Button) findViewById(R.id.btn_calc_screen2);
         mBtnCalcCals.setOnClickListener(this);
@@ -100,6 +101,8 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
     public void onClick(View view) {
         if (view.getId() == R.id.btn_calc_screen2) {
             calculateDailyCalories(view);
+            mIntentToOpenActivity = new Intent(ctx, OpenActivity.class);
+            startActivity(mIntentToOpenActivity);
         }
     }
 }

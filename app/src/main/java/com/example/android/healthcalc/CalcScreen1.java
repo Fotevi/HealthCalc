@@ -15,7 +15,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private Context ctx = this;
     private EditText mEtYears, mEtMetersFeet, mEtCmInch, mEtKgLbs;
     private Button mBtnGoToCalcScreen2;
-    private Intent mIntnGoToCalcScreen2;
+    private Intent mIntentGoToCalcScreen2;
     private int mIntYears;
     private float mFloatWeight, mFloatHeight;
     private boolean mBoolIsMale, mBoolMetrOrImper; //mBoolMetrOrImper true = Metric , false = Imperial
@@ -85,14 +85,14 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
                 mIntYears = Integer.parseInt(mEtYears.getText().toString());
 
-                mIntnGoToCalcScreen2 = new Intent(ctx, CalcScreen2.class);
-                mIntnGoToCalcScreen2.putExtra("Age",mIntYears);
-                mIntnGoToCalcScreen2.putExtra("Gender",mBoolIsMale);
-                mIntnGoToCalcScreen2.putExtra("Height", mFloatHeight);
-                mIntnGoToCalcScreen2.putExtra("Weight", mFloatWeight);
+                mIntentGoToCalcScreen2 = new Intent(ctx, CalcScreen2.class);
+                mIntentGoToCalcScreen2.putExtra("Age",mIntYears);
+                mIntentGoToCalcScreen2.putExtra("Gender",mBoolIsMale);
+                mIntentGoToCalcScreen2.putExtra("Height", mFloatHeight);
+                mIntentGoToCalcScreen2.putExtra("Weight", mFloatWeight);
                 //send data and start new activity to get user activity level and to calculate
                 //the daily calorie needs
-                startActivity(mIntnGoToCalcScreen2);
+                startActivity(mIntentGoToCalcScreen2);
             } catch (Exception ex) {
                 Toast.makeText(ctx, "Wrong input", Toast.LENGTH_SHORT).show();
             }
