@@ -66,7 +66,7 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
         //Calculating macros
         mFloatProtein = mFloatWeight * 2.204f;
         mFloatFats = mFloatWeight;
-        mFloatCarbs = (mFloatDailyCalories - mFloatProtein * 4 - mFloatFats * 9)/4;
+        mFloatCarbs = (mFloatDailyCalories - mFloatProtein * 4 - mFloatFats * 9) / 4;
 
         mSharPrefEditor.putFloat("DailyCalories", mFloatDailyCalories);
         mSharPrefEditor.putFloat("Protein", mFloatProtein);
@@ -77,6 +77,9 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        //gets the checked radio button and assigns
+        // the corresponding value to mFloatActivityLvl
+
         if (i == R.id.rb_calc_screen2_low) {
             mFloatActivityLvl = 1.25f;
         } else if (i == R.id.rb_calc_screen2_light) {
