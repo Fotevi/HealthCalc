@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class OpenActivity extends AppCompatActivity {
+public class
+
+OpenActivity extends AppCompatActivity {
 
     private Button mBtnGoToCalcScreen1;
     private Intent mIntnGoToCalcScreen1;

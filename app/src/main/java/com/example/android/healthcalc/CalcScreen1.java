@@ -17,7 +17,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private Button mBtnGoToCalcScreen2;
     private Intent mIntnGoToCalcScreen2;
     private int mIntYears;
-    private double mDoubleWeight, mDoubleHeight;
+    private float mFloatWeight, mFloatHeight;
     private boolean mBoolIsMale, mBoolMetrOrImper; //mBoolMetrOrImper true = Metric , false = Imperial
     private TabLayout mTlMetersFeet, mTlKgLbs, mTlMaleFemale;
 
@@ -28,7 +28,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         //Edit Text for height - Meter or Feet
         mEtMetersFeet = (EditText) findViewById(R.id.et_calc_screen1_meters_feet);
         //Edit Text for height - Centimeter or Inch
-        mEtCmInch = (EditText) findViewById(R.id.et_calc_screen1_meters_feet);
+        mEtCmInch = (EditText) findViewById(R.id.et_calc_screen1_sm_inch);
         //Edit Text for weight - kg or lbs
         mEtKgLbs = (EditText) findViewById(R.id.et_calc_screen1_kg_lbs);
         //Button to go to class CalcScreen2
@@ -72,14 +72,15 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
                 if (mBoolMetrOrImper == false) {
                     //If imperial transition data to metric
-                    mDoubleWeight = Integer.valueOf(mEtKgLbs.getText().toString()) * 0.453592; // weight in kg
-                    mDoubleHeight = Integer.valueOf(mEtMetersFeet.getText().toString()) * 30.48 +
-                            Integer.valueOf(mEtCmInch.getText().toString()) * 2.54; // height in cm
+                    mFloatWeight =  Integer.valueOf(mEtKgLbs.getText().toString()) * 0.453592f; // weight in kg
+                    mFloatHeight = Integer.valueOf(mEtMetersFeet.getText().toString()) * 30.48f +
+                            Integer.valueOf(mEtCmInch.getText().toString()) * 2.54f; // height in cm
                 } else {
                     //if metric transition meters to cm
-                    mDoubleWeight = Integer.valueOf(mEtKgLbs.getText().toString()); // weight in kg
-                    mDoubleHeight = Integer.valueOf(mEtMetersFeet.getText().toString()) * 100 +
+                    mFloatWeight = Integer.valueOf(mEtKgLbs.getText().toString()); // weight in kg
+                    mFloatHeight = Integer.valueOf(mEtMetersFeet.getText().toString())*100 +
                             Integer.valueOf(mEtCmInch.getText().toString()); // height in cm
+
                 }
 
                 mIntYears = Integer.parseInt(mEtYears.getText().toString());
@@ -87,8 +88,8 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
                 mIntnGoToCalcScreen2 = new Intent(ctx, CalcScreen2.class);
                 mIntnGoToCalcScreen2.putExtra("Age",mIntYears);
                 mIntnGoToCalcScreen2.putExtra("Gender",mBoolIsMale);
-                mIntnGoToCalcScreen2.putExtra("Height",mDoubleHeight);
-                mIntnGoToCalcScreen2.putExtra("Weight",mDoubleWeight);
+                mIntnGoToCalcScreen2.putExtra("Height", mFloatHeight);
+                mIntnGoToCalcScreen2.putExtra("Weight", mFloatWeight);
                 //send data and start new activity to get user activity level and to calculate
                 //the daily calorie needs
                 startActivity(mIntnGoToCalcScreen2);

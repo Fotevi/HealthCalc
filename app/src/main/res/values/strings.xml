@@ -19,4 +19,5 @@
     <string name="active">active individuals (exercising 6-7 days/week at moderate to high intensity)</string>
     <string name="extreme">extremely active individuals (engaged in heavy/intense exercise like heavy manual labor, heavy lifting,
         endurance athletes, and competitive team sports athletes)</string>
+    <string name="calculate">Calculate daily calories</string>
 </resources>
