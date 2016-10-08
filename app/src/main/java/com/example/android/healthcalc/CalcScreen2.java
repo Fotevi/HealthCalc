@@ -3,6 +3,7 @@ package com.example.android.healthcalc;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,7 +40,7 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
     protected void init() {
         mIntentFromCalcScreen1 = new Intent();
         mRgActivityLvl = (RadioGroup) findViewById(R.id.rg_calc_screen2_activity_lvl);
-        mSharPref = this.getPreferences(Context.MODE_PRIVATE);
+        mSharPref = getSharedPreferences("MySharedPrefs",Context.MODE_PRIVATE);
         mSharPrefEditor = mSharPref.edit();
         mBtnCalcCals = (Button) findViewById(R.id.btn_calc_screen2);
         mBtnCalcCals.setOnClickListener(this);
