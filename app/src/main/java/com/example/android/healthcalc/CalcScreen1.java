@@ -10,25 +10,39 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class CalcScreen1 extends AppCompatActivity implements View.OnClickListener,TabLayout.OnTabSelectedListener{
+public class CalcScreen1 extends AppCompatActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener {
 
-    private Context ctx=this;
-    private EditText mEtYears, mEtMetersFeet, mEtCmInch, mEtKgLbs ;
+    private Context ctx = this;
+    private EditText mEtYears, mEtMetersFeet, mEtCmInch, mEtKgLbs;
     private Button mBtnGoToCalcScreen2;
-    private Intent mIntnGoToCalcScreen2;
-    private int mYears, mMeters, mCentimeters, mKilograms;
-    private boolean mIsMale, mAreMeters, mAreKilograms;
-    private TabLayout mTlMetersFeet, mTlKgLbs;
+    private Intent mIntentGoToCalcScreen2;
+    private int mIntYears;
+    private float mFloatWeight, mFloatHeight;
+    private boolean mBoolIsMale, mBoolMetrOrImper; //mBoolMetrOrImper true = Metric , false = Imperial
+    private TabLayout mTlMetersFeet, mTlKgLbs, mTlMaleFemale;
 
 
-    protected void init(){
-        mEtYears=(EditText)findViewById(R.id.et_calc_screen1_years);
-        mEtMetersFeet=(EditText)findViewById(R.id.et_calc_screen1_meters_feet);
-        mEtCmInch=(EditText)findViewById(R.id.et_calc_screen1_meters_feet);
-        mEtKgLbs=(EditText)findViewById(R.id.et_calc_screen1_kg_lbs);
-        mBtnGoToCalcScreen2=(Button)findViewById(R.id.btn_calc_screen1_go_calc_screen2);
-        mTlMetersFeet=(TabLayout)findViewById(R.id.tl_calc_screen1_meters_feet);
+    protected void init() {
+        //Edit Text for entering years
+        mEtYears = (EditText) findViewById(R.id.et_calc_screen1_years);
+        //Edit Text for height - Meter or Feet
+        mEtMetersFeet = (EditText) findViewById(R.id.et_calc_screen1_meters_feet);
+        //Edit Text for height - Centimeter or Inch
+        mEtCmInch = (EditText) findViewById(R.id.et_calc_screen1_sm_inch);
+        //Edit Text for weight - kg or lbs
+        mEtKgLbs = (EditText) findViewById(R.id.et_calc_screen1_kg_lbs);
+        //Button to go to class CalcScreen2
+        mBtnGoToCalcScreen2 = (Button) findViewById(R.id.btn_calc_screen1_go_calc_screen2);
+        //Tab Layout to choose Meters or Feets
+        mTlMetersFeet = (TabLayout) findViewById(R.id.tl_calc_screen1_meters_feet);
+        //Tab Layout to choose Kg or Lbs
         mTlKgLbs=(TabLayout)findViewById(R.id.tl_calc_screen1_lbs_kg);
+        //Tab Layout to choose Male or Female
+        mTlMaleFemale=(TabLayout)findViewById(R.id.tl_calc_screen1_male_female);
+
+        //Initial values
+        mBoolIsMale = true;
+        mBoolMetrOrImper = true;
     }
 
     @Override
@@ -38,6 +52,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
         init();
 
+        //Setting onClick and onTabSelected Listeners
         mBtnGoToCalcScreen2.setOnClickListener((View.OnClickListener) ctx);
         mTlMetersFeet.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
         mTlKgLbs.addOnTabSelectedListener((TabLayout.OnTabSelectedListener) ctx);
@@ -49,14 +64,36 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.btn_calc_screen1_go_calc_screen2){
+
+        //When mBtnGoToCalcScreen2( id = btn_calc_screen1_go_calc_screen2) is clicked -> go to CalcScreen2.class
+        if (view.getId() == R.id.btn_calc_screen1_go_calc_screen2) {
 
             try {
-                mYears = Integer.parseInt(mEtYears.getText().toString());
 
-                mIntnGoToCalcScreen2=new Intent(ctx,CalcScreen2.class);
-                startActivity(mIntnGoToCalcScreen2);
-            }catch (Exception ex){
+                if (mBoolMetrOrImper == false) {
+                    //If imperial transition data to metric
+                    mFloatWeight =  Integer.valueOf(mEtKgLbs.getText().toString()) * 0.453592f; // weight in kg
+                    mFloatHeight = Integer.valueOf(mEtMetersFeet.getText().toString()) * 30.48f +
+                            Integer.valueOf(mEtCmInch.getText().toString()) * 2.54f; // height in cm
+                } else {
+                    //if metric transition meters to cm
+                    mFloatWeight = Integer.valueOf(mEtKgLbs.getText().toString()); // weight in kg
+                    mFloatHeight = Integer.valueOf(mEtMetersFeet.getText().toString())*100 +
+                            Integer.valueOf(mEtCmInch.getText().toString()); // height in cm
+
+                }
+
+                mIntYears = Integer.parseInt(mEtYears.getText().toString());
+
+                mIntentGoToCalcScreen2 = new Intent(ctx, CalcScreen2.class);
+                mIntentGoToCalcScreen2.putExtra("Age",mIntYears);
+                mIntentGoToCalcScreen2.putExtra("Gender",mBoolIsMale);
+                mIntentGoToCalcScreen2.putExtra("Height", mFloatHeight);
+                mIntentGoToCalcScreen2.putExtra("Weight", mFloatWeight);
+                //send data and start new activity to get user activity level and to calculate
+                //the daily calorie needs
+                startActivity(mIntentGoToCalcScreen2);
+            } catch (Exception ex) {
                 Toast.makeText(ctx, "Wrong input", Toast.LENGTH_SHORT).show();
             }
 
@@ -67,24 +104,36 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        try {
-                if(tab.equals(mTlKgLbs.getTabAt(0))) {
-                    mTlMetersFeet.getTabAt(0).select();
-                }
-                else if(tab.equals(mTlKgLbs.getTabAt(1))){
-                    mTlMetersFeet.getTabAt(1).select();
-                }
-                else if(tab.equals(mTlMetersFeet.getTabAt(1))){
-                    mTlKgLbs.getTabAt(1).select();
-                }
-                else if(tab.equals(mTlMetersFeet.getTabAt(0))){
-                    mTlKgLbs.getTabAt(0).select();
-                }
+        //verifying that user data is only in metric or only in imperial
+        //the tab layouts for meters/feet and kg/lbs are connected
 
-        }catch (Exception ex){
-
+        //Kilograms is selected
+        if (tab.equals(mTlKgLbs.getTabAt(0))) {
+            mTlMetersFeet.getTabAt(0).select();
+            mBoolMetrOrImper = true;
+        //Pounds are selected
+        } else if (tab.equals(mTlKgLbs.getTabAt(1))) {
+            mTlMetersFeet.getTabAt(1).select();
+            mBoolMetrOrImper = false;
+        //Meters are selected
+        } else if (tab.equals(mTlMetersFeet.getTabAt(0))) {
+            mTlKgLbs.getTabAt(0).select();
+            mBoolMetrOrImper = true;
+        //Feet are selected
+        } else if (tab.equals(mTlMetersFeet.getTabAt(1))) {
+            mTlKgLbs.getTabAt(1).select();
+            mBoolMetrOrImper = false;
+        //Male is selected
+        } else if (tab.equals(mTlMaleFemale.getTabAt(0))) {
+            mBoolIsMale = true;
+        //Female is selected
+        } else if (tab.equals(mTlMaleFemale.getTabAt(1))) {
+            mBoolIsMale = false;
         }
+
     }
+
+
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
