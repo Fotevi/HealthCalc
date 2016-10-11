@@ -99,7 +99,7 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
     public void onClick(View view) {
         if (view.getId() == R.id.btn_calc_screen2) {
             calculateDailyCalories(view);
-            mIntentToOpenActivity = new Intent(ctx, OpenActivity.class);
+            mIntentToOpenActivity = new Intent(ctx, OpenScreen.class);
             startActivity(mIntentToOpenActivity);
         }
     }

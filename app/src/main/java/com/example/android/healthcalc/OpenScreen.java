@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 public class
 
-OpenActivity extends AppCompatActivity implements View.OnClickListener {
+OpenScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnGoToCalcScreen1, mBtnHelloLayout;
-    private Intent mIntentGoToCalcScreen1;
+    private Button mBtnGoToCalcScreen1, mBtnHelloLayout , mBtnGoDb;
+    private Intent mIntent;
     private Context ctx = this;
     private SharedPreferences mSharPref;
     private TextView mTvCalories, mTvNutrients;
@@ -34,6 +34,7 @@ OpenActivity extends AppCompatActivity implements View.OnClickListener {
             init();
 
             mBtnGoToCalcScreen1.setOnClickListener((View.OnClickListener) ctx);
+            mBtnGoDb.setOnClickListener((View.OnClickListener) ctx);
 
             mTvCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories", 0)));
             mTvNutrients.setText(getResources().getString(R.string.proteins) + " " + String.valueOf(mSharPref.getInt("Protein", 0)));
@@ -41,22 +42,28 @@ OpenActivity extends AppCompatActivity implements View.OnClickListener {
             mTvNutrients.append(" \n" + getResources().getString(R.string.fats) + " " + String.valueOf(mSharPref.getInt("Fats", 0)));
 
         }
+
+
     }
 
     protected void init() {
         mTvCalories = (TextView) findViewById(R.id.tv_open_activity_calories);
         mTvNutrients = (TextView) findViewById(R.id.tv_open_activity_nutrients);
         mBtnGoToCalcScreen1 = (Button) findViewById(R.id.btn_open_activity_go_calc);
+        mBtnGoDb = (Button) findViewById(R.id.btn_open_activity_go_db);
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_hello_layout) {
-            mIntentGoToCalcScreen1 = new Intent(ctx, CalcScreen1.class);
-            startActivity(mIntentGoToCalcScreen1);
+            mIntent = new Intent(ctx, CalcScreen1.class);
+            startActivity(mIntent);
         } else if (view.getId() == R.id.btn_open_activity_go_calc) {
-            mIntentGoToCalcScreen1 = new Intent(ctx, CalcScreen1.class);
-            startActivity(mIntentGoToCalcScreen1);
+            mIntent = new Intent(ctx, CalcScreen1.class);
+            startActivity(mIntent);
+        } else if (view.getId() == R.id.btn_open_activity_go_db){
+            mIntent = new Intent(ctx , DatabaseScreen.class);
+            startActivity(mIntent);
         }
     }
 }
