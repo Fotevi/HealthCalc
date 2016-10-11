@@ -3,22 +3,18 @@ package com.example.android.healthcalc;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Path;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private Context ctx = this;
     private Intent mIntentFromCalcScreen1, mIntentToOpenActivity;
-    private int mIntAge;
+    private int mIntAge, mIntDailyCalories, mIntProtein, mIntCarbs, mIntFats;
     private boolean mBoolIsMale;
-    private float mFloatHeight, mFloatWeight, mFloatDailyCalories, mFloatActivityLvl;
-    private float mFloatProtein, mFloatCarbs, mFloatFats;
+    private float mFloatHeight, mFloatWeight, mFloatActivityLvl;
     private RadioGroup mRgActivityLvl;
     private SharedPreferences mSharPref;
     private SharedPreferences.Editor mSharPrefEditor;
@@ -45,6 +41,8 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
         mSharPrefEditor = mSharPref.edit();
         mBtnCalcCals = (Button) findViewById(R.id.btn_calc_screen2);
         mBtnCalcCals.setOnClickListener(this);
+        //Initial value of activity lvl, because first radio button is checked by default
+        mFloatActivityLvl = 1.25f;
 
     }
 
@@ -58,22 +56,22 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
         Women: BMR=665.09 + (9.56 x W) + (1.84 x H) - (4.67 x A)*/
 
         if (mBoolIsMale) {
-            mFloatDailyCalories = 66.47f + (13.75f * mFloatWeight) + (5 * mFloatHeight) - (6.75f * mIntAge);
+            mIntDailyCalories = Math.round(66.47f + (13.75f * mFloatWeight) + (5 * mFloatHeight) - (6.75f * mIntAge));
         } else {
-            mFloatDailyCalories = 665.09f + (9.56f * mFloatWeight) + (1.84f * mFloatHeight) - (4.67f * mIntAge);
+            mIntDailyCalories = Math.round(665.09f + (9.56f * mFloatWeight) + (1.84f * mFloatHeight) - (4.67f * mIntAge));
         }
         // adapting calories to the activity level
-        mFloatDailyCalories = mFloatDailyCalories * mFloatActivityLvl;
+        mIntDailyCalories = Math.round(mIntDailyCalories * mFloatActivityLvl);
 
         //Calculating macros
-        mFloatProtein = mFloatWeight * 2.204f;
-        mFloatFats = mFloatWeight;
-        mFloatCarbs = (mFloatDailyCalories - mFloatProtein * 4 - mFloatFats * 9) / 4;
+        mIntProtein = Math.round(mFloatWeight * 2.204f);
+        mIntFats = Math.round(mFloatWeight);
+        mIntCarbs = Math.round((mIntDailyCalories - mIntProtein * 4 - mIntFats * 9) / 4);
 
-        mSharPrefEditor.putFloat("DailyCalories", mFloatDailyCalories);
-        mSharPrefEditor.putFloat("Protein", mFloatProtein);
-        mSharPrefEditor.putFloat("Fats", mFloatFats);
-        mSharPrefEditor.putFloat("Carbs", mFloatCarbs);
+        mSharPrefEditor.putInt("DailyCalories", mIntDailyCalories);
+        mSharPrefEditor.putInt("Protein", mIntProtein);
+        mSharPrefEditor.putInt("Fats", mIntFats);
+        mSharPrefEditor.putInt("Carbs", mIntCarbs);
         mSharPrefEditor.commit();
     }
 

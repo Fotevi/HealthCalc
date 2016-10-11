@@ -20,4 +20,8 @@
     <string name="extreme">extremely active individuals (engaged in heavy/intense exercise like heavy manual labor, heavy lifting,
         endurance athletes, and competitive team sports athletes)</string>
     <string name="calculate">Calculate daily calories</string>
+    <string name="go_to_foods">Go to foods list</string>
+    <string name="proteins">Proteins</string>
+    <string name="fats">Fats</string>
+    <string name="carbs">Carbs</string>
 </resources>
