@@ -1,9 +1,14 @@
 package com.example.android.healthcalc;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Fotev on 10/11/2016.
@@ -11,8 +16,112 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 public class DatabaseHelper  extends SQLiteAssetHelper{
     private static final String DATABASE_NAME = "foods.db";
     private static final int DATABASE_VERSION = 1;
+    SQLiteDatabase db ;
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public ArrayList<Food> getOneItem(String itemName){
+
+        if(itemName == null)
+            return null;
+
+        ArrayList<Food> tempList = new ArrayList<Food>();
+        db = this.getReadableDatabase();
+
+        String selection = FoodsDb.FoodInfo.NAME_COLUMN + " LIKE ?";
+        String[] selectionArgs = { itemName };
+
+        Cursor c = db.query(
+                FoodsDb.FoodInfo.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if(c.moveToFirst() == true && c != null){
+            do{
+                Food tempFood = new Food();
+                tempFood.setmIntId(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.ID_COLUMN)));
+                tempFood.setmStrName(c.getString(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.NAME_COLUMN)));
+                tempFood.setmIntCalories(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.CALORIES_COLUMN)));
+                tempFood.setmIntProtein(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.PROTEIN_COLUMN)));
+                tempFood.setmIntCarbs(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.CARBS_COLUMN)));
+                tempFood.setmIntFats(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.FATS_COLUMN)));
+                tempFood.setmIntVitA(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITA_COLUMN)));
+                tempFood.setmIntVitB6(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITB6_COLUMN)));
+                tempFood.setmIntVitC(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITC_COLUMN)));
+                tempFood.setmIntVitD(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITD_COLUMN)));
+                tempFood.setmIntZinc(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.ZINC_COLUMN)));
+                tempFood.setmIntMagnesium(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.MAGNESIUM_COLUMN)));
+                tempFood.setmIntIron(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.IRON_COLUMN)));
+
+                tempList.add(tempFood);
+
+            }while(c.moveToNext() != false);
+        }
+
+        c.close();
+        this.close();
+        return tempList;
+    }
+
+    public boolean addItem(String itemName ,int itemCalories, int itemProtein,int itemCarbs,
+                            int itemFats, int itemVitA , int itemVitB6, int itemVitC,
+                            int itemVitD, int itemZinc, int itemMagnesium, int itemIron){
+
+        if(itemName == null) return false;
+
+        db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FoodsDb.FoodInfo.NAME_COLUMN,itemName);
+        contentValues.put(FoodsDb.FoodInfo.CALORIES_COLUMN,itemCalories);
+        contentValues.put(FoodsDb.FoodInfo.PROTEIN_COLUMN,itemProtein);
+        contentValues.put(FoodsDb.FoodInfo.CARBS_COLUMN,itemCarbs);
+        contentValues.put(FoodsDb.FoodInfo.FATS_COLUMN,itemFats);
+        contentValues.put(FoodsDb.FoodInfo.VITA_COLUMN,itemVitA);
+        contentValues.put(FoodsDb.FoodInfo.VITB6_COLUMN,itemVitB6);
+        contentValues.put(FoodsDb.FoodInfo.VITC_COLUMN,itemVitC);
+        contentValues.put(FoodsDb.FoodInfo.VITD_COLUMN,itemVitD);
+        contentValues.put(FoodsDb.FoodInfo.ZINC_COLUMN,itemZinc);
+        contentValues.put(FoodsDb.FoodInfo.MAGNESIUM_COLUMN,itemMagnesium);
+        contentValues.put(FoodsDb.FoodInfo.IRON_COLUMN,itemIron);
+
+        long check = db.insert(FoodsDb.FoodInfo.TABLE_NAME,null,contentValues);
+        if(check == -1) return false;
+
+        return true;
+    }
+
+    public boolean addItem(Food food){
+
+        if(food == null) return false;
+
+        db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FoodsDb.FoodInfo.NAME_COLUMN,food.getmStrName());
+        contentValues.put(FoodsDb.FoodInfo.CALORIES_COLUMN,food.getmIntCalories());
+        contentValues.put(FoodsDb.FoodInfo.PROTEIN_COLUMN,food.getmIntProtein());
+        contentValues.put(FoodsDb.FoodInfo.CARBS_COLUMN,food.getmIntCarbs());
+        contentValues.put(FoodsDb.FoodInfo.FATS_COLUMN,food.getmIntFats());
+        contentValues.put(FoodsDb.FoodInfo.VITA_COLUMN, food.getmIntVitA());
+        contentValues.put(FoodsDb.FoodInfo.VITB6_COLUMN, food.getmIntVitB6());
+        contentValues.put(FoodsDb.FoodInfo.VITC_COLUMN,food.getmIntVitC());
+        contentValues.put(FoodsDb.FoodInfo.VITD_COLUMN,food.getmIntVitD());
+        contentValues.put(FoodsDb.FoodInfo.ZINC_COLUMN,food.getmIntZinc());
+        contentValues.put(FoodsDb.FoodInfo.MAGNESIUM_COLUMN,food.getmIntMagnesium());
+        contentValues.put(FoodsDb.FoodInfo.IRON_COLUMN,food.getmIntIron());
+
+        long check = db.insert(FoodsDb.FoodInfo.TABLE_NAME,null,contentValues);
+        if(check == -1) return false;
+
+        return true;
     }
 }
