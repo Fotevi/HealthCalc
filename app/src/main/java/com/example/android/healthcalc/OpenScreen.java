@@ -24,12 +24,16 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         mSharPref = getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE);
 
+        //Checking which screen need to be shown based on the data in SharedPrefferences
+
+        //If no data show the Hello screen
         if ((mSharPref.getInt("DailyCalories", 0)) == 0) {
             setContentView(R.layout.hello_layout);
             mBtnHelloLayout = (Button) findViewById(R.id.btn_hello_layout);
             mBtnHelloLayout.setOnClickListener((View.OnClickListener) ctx);
 
         } else {
+        //If there is data in shared prefferences we show the main activity
             setContentView(R.layout.activity_open);
             init();
 
@@ -47,6 +51,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
     }
 
     protected void init() {
+        //binding the UI elements to variables
         mTvCalories = (TextView) findViewById(R.id.tv_open_activity_calories);
         mTvNutrients = (TextView) findViewById(R.id.tv_open_activity_nutrients);
         mBtnGoToCalcScreen1 = (Button) findViewById(R.id.btn_open_activity_go_calc);

@@ -28,6 +28,7 @@ public final class FoodsDb {
         public static final String IRON_COLUMN = "Iron";
     }
 
+    /* Inner class that defines table DailyNutrition contents */
     public static class DailyNutrition {
         public static final String TABLE_NAME = "DailyNutrition";
         public static final String COLUMN_FOODID = "FoodId";

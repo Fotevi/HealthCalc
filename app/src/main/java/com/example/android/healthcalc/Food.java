@@ -5,6 +5,8 @@ package com.example.android.healthcalc;
  */
 public class Food {
 
+    //Class maping the columns in Foods database
+
     private int mIntId;
     private String mStrName;
     private int mIntCalories;

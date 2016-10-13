@@ -8,12 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Created by Fotev on 10/11/2016.
  */
 public class DatabaseHelper  extends SQLiteAssetHelper{
+    //Database description
     private static final String DATABASE_NAME = "foods.db";
     private static final int DATABASE_VERSION = 1;
     SQLiteDatabase db ;
@@ -23,13 +24,18 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //Inserting item/items in the database
     public ArrayList<Food> getOneItem(String itemName){
 
+
+        //If we have String send to the function
+        //query to the database is send
         if(itemName == null)
             return null;
 
         ArrayList<Food> tempList = new ArrayList<Food>();
         db = this.getReadableDatabase();
+
 
         String selection = FoodsDb.FoodInfo.NAME_COLUMN + " LIKE ?";
         String[] selectionArgs = { itemName };
@@ -44,6 +50,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
                 null
         );
 
+        //If the query has results we fill the Food class with info from the db
         if(c.moveToFirst() == true && c != null){
             do{
                 Food tempFood = new Food();
@@ -66,8 +73,11 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
             }while(c.moveToNext() != false);
         }
 
+        //Closing cursor and database
         c.close();
         this.close();
+
+        //Retrieving the Arraylist filled with data based on the query
         return tempList;
     }
 
@@ -75,8 +85,10 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
                             int itemFats, int itemVitA , int itemVitB6, int itemVitC,
                             int itemVitD, int itemZinc, int itemMagnesium, int itemIron){
 
+        //Name is mandatory , if no name is send, no items are added to DB
         if(itemName == null) return false;
 
+        //If name is added in the function call , the item is inserted in the DB
         db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -93,6 +105,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         contentValues.put(FoodsDb.FoodInfo.MAGNESIUM_COLUMN,itemMagnesium);
         contentValues.put(FoodsDb.FoodInfo.IRON_COLUMN,itemIron);
 
+        //Check if the item is add
         long check = db.insert(FoodsDb.FoodInfo.TABLE_NAME,null,contentValues);
         if(check == -1) return false;
 
@@ -100,7 +113,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
     }
 
     public boolean addItem(Food food){
-
+        //Same function for adding items in DB, but using class as input parameter
         if(food == null) return false;
 
         db = this.getWritableDatabase();
