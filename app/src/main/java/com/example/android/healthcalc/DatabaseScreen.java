@@ -49,6 +49,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
             }
         });*/
 
+        mArrListDataFromDb=new ArrayList<>();
         mBtnSearch = (Button) findViewById(R.id.btn_database_screen_search);
         mBtnAdd = (Button) findViewById(R.id.btn_database_screen_add);
         mBtnSearch.setOnClickListener(this);
@@ -61,8 +62,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_database_screen_search:
                 String tempText = mEditText.getText().toString();
                 Toast.makeText(ctx,tempText,Toast.LENGTH_LONG).show();
-               // databaseHelper.getOneItem(tempText);
-
+                mArrListDataFromDb=databaseHelper.getOneItem(tempText);
         }
     }
 }
