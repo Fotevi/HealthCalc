@@ -25,7 +25,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
     }
 
     //Inserting item/items in the database
-    public ArrayList<Food> getOneItem(String itemName){
+    public ArrayList<Food> getSpecificItem(String itemName){
 
 
         //If we have String send to the function
@@ -38,6 +38,67 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
 
 
         String selection = FoodsDb.FoodInfo.NAME_COLUMN + " LIKE ?";
+        String[] selectionArgs = { itemName };
+
+        Cursor c = db.query(
+                FoodsDb.FoodInfo.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        //If the query has results we fill the Food class with info from the db
+        if(c.moveToFirst() == true && c != null){
+            do{
+                Food tempFood = new Food();
+                tempFood.setmIntId(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.ID_COLUMN)));
+                tempFood.setmStrName(c.getString(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.NAME_COLUMN)));
+                tempFood.setmIntCalories(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.CALORIES_COLUMN)));
+                tempFood.setmIntProtein(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.PROTEIN_COLUMN)));
+                tempFood.setmIntCarbs(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.CARBS_COLUMN)));
+                tempFood.setmIntFats(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.FATS_COLUMN)));
+                tempFood.setmIntVitA(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITA_COLUMN)));
+                tempFood.setmIntVitB6(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITB6_COLUMN)));
+                tempFood.setmIntVitC(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITC_COLUMN)));
+                tempFood.setmIntVitD(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.VITD_COLUMN)));
+                tempFood.setmIntZinc(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.ZINC_COLUMN)));
+                tempFood.setmIntMagnesium(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.MAGNESIUM_COLUMN)));
+                tempFood.setmIntIron(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.IRON_COLUMN)));
+
+                tempList.add(tempFood);
+
+            }while(c.moveToNext() != false);
+        }
+
+        //Closing cursor and database
+        c.close();
+        this.close();
+
+        //Retrieving the Arraylist filled with data based on the query
+        return tempList;
+    }
+
+    public ArrayList<Food> getSpecificItemWK(String itemName){
+
+
+        //If we have String send to the function
+        //query to the database is send
+        if(itemName == null)
+            return null;
+
+        ArrayList<Food> tempList = new ArrayList<Food>();
+
+        if(itemName.length()<2)
+            return tempList;
+
+        db = this.getReadableDatabase();
+
+
+        String selection = FoodsDb.FoodInfo.NAME_COLUMN + " LIKE ?";
+        itemName = itemName + "%";
         String[] selectionArgs = { itemName };
 
         Cursor c = db.query(

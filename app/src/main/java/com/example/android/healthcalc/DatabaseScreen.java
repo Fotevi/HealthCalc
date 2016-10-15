@@ -19,8 +19,8 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
     private EditText mEditText;
     DatabaseHelper databaseHelper;
-    Context ctx=this;
-    Button mBtnSearch , mBtnAdd;
+    Context ctx = this;
+    Button mBtnSearch, mBtnAdd;
     ArrayList<Food> mArrListDataFromDb;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -34,14 +34,8 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         init();
 
-        //Food food=new Food("food",50,50,50,50);
-        //databaseHelper.addItem(food);
 
-    }
-
-    public void init(){
-        mEditText=(EditText)findViewById(R.id.edit_text);
-        /*mEditText.addTextChangedListener(new TextWatcher() {
+        mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -49,22 +43,31 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Toast.makeText(ctx,"OnTextChanged",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "OnTextChanged", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                Toast.makeText(ctx,"afterTectChanged",Toast.LENGTH_SHORT).show();
+                String tempText = mEditText.getText().toString();
+                mArrListDataFromDb = databaseHelper.getSpecificItemWK(tempText);
+                mAdapter = new RecViewAdapter(mArrListDataFromDb);
+                mRecyclerView.setAdapter(mAdapter);
             }
-        });*/
-        mItemDecoration=new RecViewItemDecoration();
-        mRecyclerView=(RecyclerView)findViewById(R.id.rv_database_screen_recycler);
-        mLayoutManager=new LinearLayoutManager(ctx);
+        });
+
+    }
+
+    public void init() {
+        mEditText = (EditText) findViewById(R.id.edit_text);
+
+        mItemDecoration = new RecViewItemDecoration();
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_database_screen_recycler);
+        mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(mItemDecoration);
 
-        mArrListDataFromDb=new ArrayList<>();
-        databaseHelper=new DatabaseHelper(this);
+        mArrListDataFromDb = new ArrayList<>();
+        databaseHelper = new DatabaseHelper(this);
         mBtnSearch = (Button) findViewById(R.id.btn_database_screen_search);
         mBtnAdd = (Button) findViewById(R.id.btn_database_screen_add);
         mBtnSearch.setOnClickListener(this);
@@ -73,12 +76,12 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_database_screen_search:
                 String tempText = mEditText.getText().toString();
-                Toast.makeText(ctx,tempText,Toast.LENGTH_LONG).show();
-                mArrListDataFromDb=databaseHelper.getOneItem(tempText);
-                mAdapter=new RecViewAdapter(mArrListDataFromDb);
+                Toast.makeText(ctx, tempText, Toast.LENGTH_LONG).show();
+                mArrListDataFromDb = databaseHelper.getSpecificItem(tempText);
+                mAdapter = new RecViewAdapter(mArrListDataFromDb);
                 mRecyclerView.setAdapter(mAdapter);
         }
     }
