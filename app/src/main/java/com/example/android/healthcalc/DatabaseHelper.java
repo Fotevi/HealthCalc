@@ -24,7 +24,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //Inserting item/items in the database
+    //make query to find an item with specific name
     public ArrayList<Food> getSpecificItem(String itemName){
 
 
@@ -81,6 +81,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         return tempList;
     }
 
+    //make query to find an item which starts with specific name
     public ArrayList<Food> getSpecificItemWK(String itemName){
 
 
@@ -173,6 +174,7 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         return true;
     }
 
+    //Inserting item/items in the database
     public boolean addItem(Food food){
         //Same function for adding items in DB, but using class as input parameter
         if(food == null) return false;
