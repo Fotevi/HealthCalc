@@ -1,21 +1,25 @@
 package com.example.android.healthcalc;
 
 import android.content.Context;
+import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener {
+public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, IRvOnClick {
 
     private EditText mEditText;
     DatabaseHelper databaseHelper;
@@ -43,14 +47,13 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Toast.makeText(ctx, "OnTextChanged", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 String tempText = mEditText.getText().toString();
                 mArrListDataFromDb = databaseHelper.getSpecificItemWK(tempText);
-                mAdapter = new RecViewAdapter(mArrListDataFromDb);
+                mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
@@ -79,10 +82,16 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
                 String tempText = mEditText.getText().toString();
-                Toast.makeText(ctx, tempText, Toast.LENGTH_LONG).show();
                 mArrListDataFromDb = databaseHelper.getSpecificItem(tempText);
-                mAdapter = new RecViewAdapter(mArrListDataFromDb);
+                mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
         }
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+        String currentDateTimeString = java.text.DateFormat.getDateInstance(3).format(new Date());
+        int id = mArrListDataFromDb.get(position).getmIntId();
+
     }
 }

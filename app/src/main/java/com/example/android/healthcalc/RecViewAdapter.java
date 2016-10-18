@@ -16,10 +16,16 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
 
     private ArrayList<Food> mAdapterData;
     private String mStringG;
+    public static IRvOnClick mListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTvName, mTvCal, mTvProt, mTvCarbs, mTvFats;
+        int position;
+
+        private void getItemPosition(int position){
+            this.position=position;
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -30,11 +36,18 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
             mTvCarbs=(TextView)itemView.findViewById(R.id.tv_rec_view_item_carbs);
             mTvFats=(TextView)itemView.findViewById(R.id.tv_rec_view_item_fats);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemSelected(position);
+                }
+            });
         }
     }
 
-    public RecViewAdapter(ArrayList<Food> data) {
-        mAdapterData = data;
+    public RecViewAdapter(ArrayList<Food> data, IRvOnClick context) {
+        this.mAdapterData = data;
+        this.mListener = context;
     }
 
     @Override
@@ -56,6 +69,7 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
             holder.mTvProt.append(" " + String.valueOf(mAdapterData.get(position).getmIntProtein()) + mStringG);
             holder.mTvCarbs.append(" " + String.valueOf(mAdapterData.get(position).getmIntCarbs()) + mStringG);
             holder.mTvFats.append(" " + String.valueOf(mAdapterData.get(position).getmIntFats()) + mStringG);
+            holder.getItemPosition(position);
         }
 
     }
