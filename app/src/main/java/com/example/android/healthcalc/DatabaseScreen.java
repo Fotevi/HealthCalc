@@ -1,21 +1,17 @@
 package com.example.android.healthcalc;
 
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,7 +48,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
             @Override
             public void afterTextChanged(Editable editable) {
                 String tempText = mEditText.getText().toString();
-                mArrListDataFromDb = databaseHelper.getSpecificItemWK(tempText);
+                mArrListDataFromDb = databaseHelper.searchInFoodTableWK(tempText);
                 mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
             }
@@ -82,7 +78,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
                 String tempText = mEditText.getText().toString();
-                mArrListDataFromDb = databaseHelper.getSpecificItem(tempText);
+                mArrListDataFromDb = databaseHelper.searchInFoodTable(tempText);
                 mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
         }

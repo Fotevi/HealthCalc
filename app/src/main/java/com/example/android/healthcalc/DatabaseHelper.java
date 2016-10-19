@@ -24,8 +24,8 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //make query to find an item with specific name
-    public ArrayList<Food> getSpecificItem(String itemName){
+    //make query to find an item in the food table with specific name
+    public ArrayList<Food> searchInFoodTable(String itemName){
 
 
         //If we have String send to the function
@@ -75,14 +75,14 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
 
         //Closing cursor and database
         c.close();
-        this.close();
+        db.close();
 
         //Retrieving the Arraylist filled with data based on the query
         return tempList;
     }
 
-    //make query to find an item which starts with specific name
-    public ArrayList<Food> getSpecificItemWK(String itemName){
+    //make query to find an item in the food table which starts with specific name
+    public ArrayList<Food> searchInFoodTableWK(String itemName){
 
 
         //If we have String send to the function
@@ -137,15 +137,15 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
 
         //Closing cursor and database
         c.close();
-        this.close();
+        db.close();
 
         //Retrieving the Arraylist filled with data based on the query
         return tempList;
     }
 
-    public boolean addItem(String itemName ,int itemCalories, int itemProtein,int itemCarbs,
-                            int itemFats, int itemVitA , int itemVitB6, int itemVitC,
-                            int itemVitD, int itemZinc, int itemMagnesium, int itemIron){
+    public boolean addItemInFoodTable(String itemName , int itemCalories, int itemProtein, int itemCarbs,
+                                      int itemFats, int itemVitA , int itemVitB6, int itemVitC,
+                                      int itemVitD, int itemZinc, int itemMagnesium, int itemIron){
 
         //Name is mandatory , if no name is send, no items are added to DB
         if(itemName == null) return false;
@@ -171,11 +171,12 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         long check = db.insert(FoodsDb.FoodInfo.TABLE_NAME,null,contentValues);
         if(check == -1) return false;
 
+        db.close();
         return true;
     }
 
     //Inserting item/items in the database
-    public boolean addItem(Food food){
+    public boolean addItemInFoodTable(Food food){
         //Same function for adding items in DB, but using class as input parameter
         if(food == null) return false;
 
@@ -198,6 +199,22 @@ public class DatabaseHelper  extends SQLiteAssetHelper{
         long check = db.insert(FoodsDb.FoodInfo.TABLE_NAME,null,contentValues);
         if(check == -1) return false;
 
+        db.close();
+        return true;
+    }
+
+    public boolean addItemInDailyNutrTable(int foodId, String date, int quantity){
+        db=this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FoodsDb.DailyNutrition.FOODID_COLUMN,foodId);
+        contentValues.put(FoodsDb.DailyNutrition.DATE_COLUMN,date);
+        contentValues.put(FoodsDb.DailyNutrition.QUANTITY_COLUMN,quantity);
+
+        long check = db.insert(FoodsDb.DailyNutrition.TABLE_NAME,null,contentValues);
+        if(check == -1) return false;
+
+        db.close();
         return true;
     }
 }

@@ -31,8 +31,8 @@ public final class FoodsDb {
     /* Inner class that defines table DailyNutrition contents */
     public static class DailyNutrition {
         public static final String TABLE_NAME = "DailyNutrition";
-        public static final String COLUMN_FOODID = "FoodId";
-        public static final String COLUMN_DATE = "Date";
-        public static final String COLUMN_QUANTITY = "Quantity" ;
+        public static final String FOODID_COLUMN = "FoodId";
+        public static final String DATE_COLUMN = "Date";
+        public static final String QUANTITY_COLUMN = "Quantity" ;
     }
 }
