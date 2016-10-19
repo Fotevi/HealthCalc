@@ -28,4 +28,8 @@
     <string name="add">Add</string>
     <string name="search">Search</string>
     <string name="g">g</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_food_quantity">Add the amount of food</string>
+    <string name="in_grams">(in grams)</string>
+    <string name="enter_amount">Enter amount in grams</string>
 </resources>

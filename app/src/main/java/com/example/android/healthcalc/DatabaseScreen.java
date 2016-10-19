@@ -1,5 +1,6 @@
 package com.example.android.healthcalc;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,11 +12,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, IRvOnClick {
+public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, IRvOnClick, AddFoodQuantityDialog.IDialogListener {
 
     private EditText mEditText;
     DatabaseHelper databaseHelper;
@@ -26,6 +28,8 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     RecyclerView.ItemDecoration mItemDecoration;
+    private int mIntFoodQuantity, mIntFoodId;
+    private String mStrCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,11 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         mBtnAdd.setOnClickListener(this);
     }
 
+    public void showFoodQuantityDialog(){
+        DialogFragment dialog = new AddFoodQuantityDialog();
+        dialog.show(getFragmentManager(),"foodQuantityDialog");
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -86,8 +95,14 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onItemSelected(int position) {
-        String currentDateTimeString = java.text.DateFormat.getDateInstance(3).format(new Date());
-        int id = mArrListDataFromDb.get(position).getmIntId();
+        mStrCurrentDate = java.text.DateFormat.getDateInstance(3).format(new Date());
+        mIntFoodId = mArrListDataFromDb.get(position).getmIntId();
+        showFoodQuantityDialog();
+    }
 
+    @Override
+    public void onAddBtnClicked(int quantity) {
+        mIntFoodQuantity = quantity;
+        Toast.makeText(this,String.valueOf(mIntFoodQuantity),Toast.LENGTH_SHORT).show();
     }
 }
