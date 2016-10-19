@@ -77,6 +77,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         mBtnAdd.setOnClickListener(this);
     }
 
+    //function to show dialog
     public void showFoodQuantityDialog(){
         DialogFragment dialog = new AddFoodQuantityDialog();
         dialog.show(getFragmentManager(),"foodQuantityDialog");
@@ -93,6 +94,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    //gets information from recycler view
     @Override
     public void onItemSelected(int position) {
         mStrCurrentDate = java.text.DateFormat.getDateInstance(3).format(new Date());
@@ -100,6 +102,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         showFoodQuantityDialog();
     }
 
+    //get information from dialog
     @Override
     public void onAddBtnClicked(int quantity) {
         mIntFoodQuantity = quantity;

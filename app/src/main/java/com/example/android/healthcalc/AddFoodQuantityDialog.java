@@ -18,6 +18,7 @@ import android.widget.Toast;
 public class AddFoodQuantityDialog extends DialogFragment implements View.OnClickListener {
 
 
+    //interface for comunication between dialog anddatabase screen
     public interface IDialogListener{
         void onAddBtnClicked(int quantity);
     }
@@ -38,6 +39,7 @@ public class AddFoodQuantityDialog extends DialogFragment implements View.OnClic
         builder = new AlertDialog.Builder(getActivity());
         inflater = getActivity().getLayoutInflater();
 
+        //inflating view
         View view = inflater.inflate(R.layout.add_food_quantity_dialog, null);
 
         mBtnAdd = (Button) view.findViewById(R.id.btn_food_quantity_add);
@@ -48,7 +50,9 @@ public class AddFoodQuantityDialog extends DialogFragment implements View.OnClic
         mBtnCancel.setOnClickListener(this);
         mBtnAdd.setOnClickListener(this);
 
+        //set view to dialog  bilder
         builder.setView(view);
+
         builder.setCancelable(false);
 
 
