@@ -2,12 +2,15 @@ package com.example.android.healthcalc;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -30,6 +33,8 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
     RecyclerView.ItemDecoration mItemDecoration;
     private int mIntFoodQuantity, mIntFoodId;
     private String mStrCurrentDate;
+    private Date date;
+    private java.text.DateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         init();
 
+        databaseHelper.addItemInFoodTable("Test",10,10,10,10,0,0,0,0,0,0,0);
 
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -75,22 +81,30 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         mBtnAdd = (Button) findViewById(R.id.btn_database_screen_add);
         mBtnSearch.setOnClickListener(this);
         mBtnAdd.setOnClickListener(this);
+
+        date = new Date();
+        dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+
+        mStrCurrentDate = dateFormat.format(date);
     }
 
     //function to show dialog
-    public void showFoodQuantityDialog(){
+    public void showFoodQuantityDialog() {
         DialogFragment dialog = new AddFoodQuantityDialog();
-        dialog.show(getFragmentManager(),"foodQuantityDialog");
+        dialog.show(getFragmentManager(), "foodQuantityDialog");
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
-                String tempText = mEditText.getText().toString();
-                mArrListDataFromDb = databaseHelper.searchInFoodTable(tempText);
+                String tempTextSearch = mEditText.getText().toString();
+                mArrListDataFromDb = databaseHelper.searchInFoodTable(tempTextSearch);
                 mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
+                break;
+            case R.id.btn_database_screen_add:
+                String tempTextAdd = mEditText.getText().toString();
         }
     }
 
@@ -106,6 +120,6 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onAddBtnClicked(int quantity) {
         mIntFoodQuantity = quantity;
-        Toast.makeText(this,String.valueOf(mIntFoodQuantity),Toast.LENGTH_SHORT).show();
+        boolean check = databaseHelper.addItemInDailyNutrTable(mIntFoodId,mStrCurrentDate,mIntFoodQuantity );
     }
 }
