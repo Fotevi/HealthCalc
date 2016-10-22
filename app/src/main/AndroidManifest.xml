@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".CalcScreen1" />
         <activity android:name=".CalcScreen2" />
-        <activity android:name=".DatabaseScreen"></activity>
+        <activity android:name=".DatabaseScreen" />
+        <activity android:name=".AddFoodDatabaseScreen" />
     </application>
 
 </manifest>
