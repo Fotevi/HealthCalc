@@ -14,6 +14,10 @@ import java.util.ArrayList;
  */
 public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHolder> {
 
+    public interface IRvOnClick {
+        void onItemSelected(int position);
+    }
+
     private ArrayList<Food> mAdapterData;
     private String mStringG;
     public static IRvOnClick mListener;

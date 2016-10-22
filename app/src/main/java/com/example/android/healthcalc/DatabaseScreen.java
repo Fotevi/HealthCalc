@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, IRvOnClick, AddFoodQuantityDialog.IDialogListener {
+public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, RecViewAdapter.IRvOnClick, AddFoodQuantityDialog.IDialogListener {
 
     private EditText mEditText;
     private DatabaseHelper databaseHelper;
@@ -60,7 +60,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
             public void afterTextChanged(Editable editable) {
                 String tempText = mEditText.getText().toString();
                 mArrListDataFromDb = databaseHelper.searchInFoodTableWK(tempText);
-                mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
+                mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
@@ -99,7 +99,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
                 mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
-                mAdapter = new RecViewAdapter(mArrListDataFromDb, (IRvOnClick) ctx);
+                mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
                 break;
             case R.id.btn_database_screen_add:
