@@ -98,9 +98,14 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
-                mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
-                mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
-                mRecyclerView.setAdapter(mAdapter);
+                if (mArrListDataFromDb.size() != 0) {
+                    mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
+                    mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+
+                    newInstance();
+                }
                 break;
             case R.id.btn_database_screen_add:
                 mIntent = new Intent(ctx, AddFoodDatabaseScreen.class);
@@ -110,6 +115,16 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    public void newInstance() {
+        ConfirmationAddDialog f = new ConfirmationAddDialog();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putString("NameToDialog", mStringFoodName);
+        f.setArguments(args);
+        f.show(getFragmentManager(),"ConfirmationDialogTag");
+
+    }
     //gets information from recycler view
     @Override
     public void onItemSelected(int position) {
