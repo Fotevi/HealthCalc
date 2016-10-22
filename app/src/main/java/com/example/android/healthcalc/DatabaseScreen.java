@@ -3,20 +3,16 @@ package com.example.android.healthcalc;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -98,13 +94,14 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
+                if(mEditText.getText().length()<1) break;
                 if (mArrListDataFromDb.size() != 0) {
                     mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
                     mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
 
-                    newInstance();
+                    confirmationAddDialog();
                 }
                 break;
             case R.id.btn_database_screen_add:
@@ -115,7 +112,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void newInstance() {
+    public void confirmationAddDialog() {
         ConfirmationAddDialog f = new ConfirmationAddDialog();
 
         // Supply num input as an argument.
