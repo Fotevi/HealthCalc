@@ -1,6 +1,5 @@
 package com.example.android.healthcalc;
 
-import android.app.Application;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +11,15 @@ import java.util.ArrayList;
 /**
  * Created by Stanislav on 10/14/2016.
  */
-public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHolder> {
+public class RecViewAdapterSearch extends RecyclerView.Adapter<RecViewAdapterSearch.ViewHolder> {
 
-    public interface IRvOnClick {
+    public interface IRVsearchOnClick {
         void onItemSelected(int position);
     }
 
     private ArrayList<Food> mAdapterData;
     private String mStringG;
-    public static IRvOnClick mListener;
+    public static IRVsearchOnClick mListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -49,7 +48,7 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
         }
     }
 
-    public RecViewAdapter(ArrayList<Food> data, IRvOnClick context) {
+    public RecViewAdapterSearch(ArrayList<Food> data, IRVsearchOnClick context) {
         this.mAdapterData = data;
         this.mListener = context;
     }
@@ -57,7 +56,7 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mStringG = parent.getResources().getString(R.string.g);
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rec_view_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_search_item,parent,false);
 
         ViewHolder vh = new ViewHolder(view);
 

@@ -17,7 +17,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, RecViewAdapter.IRvOnClick, AddFoodQuantityDialog.IDialogListener {
+public class DatabaseScreen extends AppCompatActivity implements View.OnClickListener, RecViewAdapterSearch.IRVsearchOnClick, AddFoodQuantityDialog.IDialogListener {
 
     private EditText mEditText;
     private DatabaseHelper databaseHelper;
@@ -56,7 +56,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
             public void afterTextChanged(Editable editable) {
                 String tempText = mEditText.getText().toString();
                 mArrListDataFromDb = databaseHelper.searchInFoodTableWK(tempText);
-                mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
+                mAdapter = new RecViewAdapterSearch(mArrListDataFromDb, (RecViewAdapterSearch.IRVsearchOnClick) ctx);
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
@@ -97,7 +97,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
                 if(mEditText.getText().length()<1) break;
                 if (mArrListDataFromDb.size() != 0) {
                     mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
-                    mAdapter = new RecViewAdapter(mArrListDataFromDb, (RecViewAdapter.IRvOnClick) ctx);
+                    mAdapter = new RecViewAdapterSearch(mArrListDataFromDb, (RecViewAdapterSearch.IRVsearchOnClick) ctx);
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
 
