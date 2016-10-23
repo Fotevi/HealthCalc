@@ -95,8 +95,8 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_database_screen_search:
                 if(mEditText.getText().length()<1) break;
+                mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
                 if (mArrListDataFromDb.size() != 0) {
-                    mArrListDataFromDb = databaseHelper.searchInFoodTable(mStringFoodName);
                     mAdapter = new RecViewAdapterSearch(mArrListDataFromDb, (RecViewAdapterSearch.IRVsearchOnClick) ctx);
                     mRecyclerView.setAdapter(mAdapter);
                 }else{

@@ -20,6 +20,7 @@ public class Food {
     private int mIntZinc;
     private int mIntMagnesium;
     private int mIntIron;
+    private int mIntQuantity;
 
     public Food(int mIntId, String mStrName, int mIntCalories, int mIntProtein,
                  int mIntCarbs, int mIntFats, int mIntVitA, int mIntVitB6, int mIntVitC,
@@ -170,5 +171,14 @@ public class Food {
 
     public void setmIntIron(int mIntIron) {
         this.mIntIron = mIntIron;
+    }
+
+    public void setmIntQuantity(int mIntQuantity) {
+        this.mIntQuantity = mIntQuantity;
+    }
+
+    public int getmIntQuantity() {
+        return mIntQuantity;
+
     }
 }

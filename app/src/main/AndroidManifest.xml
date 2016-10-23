@@ -19,7 +19,7 @@
         <activity android:name=".CalcScreen2" />
         <activity android:name=".DatabaseScreen" />
         <activity android:name=".AddFoodDatabaseScreen" />
-        <activity android:name=".ConfirmationAddDialog"></activity>
+        <activity android:name=".DiaryScreen"></activity>
     </application>
 
 </manifest>

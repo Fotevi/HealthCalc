@@ -24,6 +24,13 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:id="@+id/btn_open_activity_go_diary"
+            android:layout_weight="1"
+            android:text="DIary"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:id="@+id/btn_open_activity_go_db"
             android:layout_weight="1"
             android:text="@string/go_to_foods"

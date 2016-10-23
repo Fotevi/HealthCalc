@@ -24,7 +24,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTvName, mTvCal, mTvProt, mTvCarbs, mTvFats, mTvVitA, mTvVitB, mTvVitC, mTvVitD,
-                mTvZinc, mTvMagnesium, mTvIron;
+                mTvZinc, mTvMagnesium, mTvIron, mTvQuantity;
         int position;
 
         private void getItemPosition(int position){
@@ -46,13 +46,14 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
             mTvZinc=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_zinc);
             mTvMagnesium=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_magnesium);
             mTvIron=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_iron);
+            mTvQuantity=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_quantity);
 
         }
     }
 
-    public RecViewAdapterDiary(ArrayList<Food> data, IRVdiaryOnClick context) {
+    public RecViewAdapterDiary(ArrayList<Food> data) {
         this.mAdapterData = data;
-        this.mListener = context;
+
     }
 
     @Override
@@ -70,6 +71,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
             holder.mTvZinc.append(" " + String.valueOf(mAdapterData.get(position).getmIntZinc()));
             holder.mTvMagnesium.append(" " + String.valueOf(mAdapterData.get(position).getmIntMagnesium()));
             holder.mTvIron.append(" " + String.valueOf(mAdapterData.get(position).getmIntIron()));
+            holder.mTvQuantity.append(" " + String.valueOf(mAdapterData.get(position).getmIntQuantity()) + mStringG);
             holder.getItemPosition(position);
         }
     }

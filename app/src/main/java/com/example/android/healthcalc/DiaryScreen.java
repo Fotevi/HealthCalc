@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DiaryScreen extends AppCompatActivity {
     private ArrayList<Food> mArrListDataFromDb;
@@ -16,6 +17,7 @@ public class DiaryScreen extends AppCompatActivity {
     private RecyclerView.ItemDecoration mItemDecoration;
     private DatabaseHelper databaseHelper;
     private Context ctx = this;
+    private String mCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,12 @@ public class DiaryScreen extends AppCompatActivity {
 
         init();
 
+        mCurrentDate = java.text.DateFormat.getDateInstance(3).format(new Date());
+        mArrListDataFromDb = databaseHelper.searchForDiary(mCurrentDate);
+        if (mArrListDataFromDb.size() != 0) {
+            mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
+            mRecyclerView.setAdapter(mAdapter);
+        }
 
     }
 
@@ -36,5 +44,7 @@ public class DiaryScreen extends AppCompatActivity {
 
         mArrListDataFromDb = new ArrayList<>();
         databaseHelper = new DatabaseHelper(this);
+
+
     }
 }

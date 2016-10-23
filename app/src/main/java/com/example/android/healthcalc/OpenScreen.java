@@ -13,7 +13,7 @@ public class
 
 OpenScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnGoToCalcScreen1, mBtnHelloLayout , mBtnGoDb;
+    private Button mBtnGoToCalcScreen1, mBtnHelloLayout , mBtnGoDb, mBtnGoDiary;
     private Intent mIntent;
     private Context ctx = this;
     private SharedPreferences mSharPref;
@@ -39,6 +39,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
 
             mBtnGoToCalcScreen1.setOnClickListener((View.OnClickListener) ctx);
             mBtnGoDb.setOnClickListener((View.OnClickListener) ctx);
+            mBtnGoDiary.setOnClickListener((View.OnClickListener) ctx);
 
             mTvCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories", 0)));
             mTvNutrients.setText(getResources().getString(R.string.proteins) + " " + String.valueOf(mSharPref.getInt("Protein", 0)));
@@ -56,6 +57,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
         mTvNutrients = (TextView) findViewById(R.id.tv_open_activity_nutrients);
         mBtnGoToCalcScreen1 = (Button) findViewById(R.id.btn_open_activity_go_calc);
         mBtnGoDb = (Button) findViewById(R.id.btn_open_activity_go_db);
+        mBtnGoDiary = (Button) findViewById(R.id.btn_open_activity_go_diary);
     }
 
     @Override
@@ -68,6 +70,9 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             startActivity(mIntent);
         } else if (view.getId() == R.id.btn_open_activity_go_db){
             mIntent = new Intent(ctx , DatabaseScreen.class);
+            startActivity(mIntent);
+        }else if(view.getId() == R.id.btn_open_activity_go_diary){
+            mIntent = new Intent(ctx, DiaryScreen.class);
             startActivity(mIntent);
         }
     }
