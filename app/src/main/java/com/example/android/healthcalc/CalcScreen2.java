@@ -68,6 +68,7 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
         mIntFats = Math.round(mFloatWeight);
         mIntCarbs = Math.round((mIntDailyCalories - mIntProtein * 4 - mIntFats * 9) / 4);
 
+        //Saving data in shared prefferences
         mSharPrefEditor.putInt("DailyCalories", mIntDailyCalories);
         mSharPrefEditor.putInt("Protein", mIntProtein);
         mSharPrefEditor.putInt("Fats", mIntFats);
@@ -97,9 +98,11 @@ public class CalcScreen2 extends AppCompatActivity implements RadioGroup.OnCheck
 
     @Override
     public void onClick(View view) {
+
+        // Setting onClick function to go to the main screen
         if (view.getId() == R.id.btn_calc_screen2) {
             calculateDailyCalories(view);
-            mIntentToOpenActivity = new Intent(ctx, OpenActivity.class);
+            mIntentToOpenActivity = new Intent(ctx, OpenScreen.class);
             startActivity(mIntentToOpenActivity);
         }
     }
