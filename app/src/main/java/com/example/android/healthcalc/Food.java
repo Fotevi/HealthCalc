@@ -1,9 +1,12 @@
 package com.example.android.healthcalc;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Fotev on 10/12/2016.
  */
-public class Food {
+public class Food implements Parcelable {
 
     //Class maping the columns in Foods database
 
@@ -68,6 +71,22 @@ public class Food {
 
     public Food(){}
 
+    public Food(Parcel in){
+
+        this.mIntId = in.readInt();
+        this.mStrName = in.readString();
+        this.mIntCalories = in.readInt();
+        this.mIntProtein = in.readInt();
+        this.mIntCarbs = in.readInt();
+        this.mIntFats = in.readInt();
+        this.mIntVitA = in.readInt();
+        this.mIntVitB6 = in.readInt();
+        this.mIntVitC = in.readInt();
+        this.mIntVitD = in.readInt();
+        this.mIntZinc = in.readInt();
+        this.mIntMagnesium = in.readInt();
+        this.mIntIron = in.readInt();
+    }
 
     public int getmIntId() {
         return mIntId;
@@ -181,4 +200,43 @@ public class Food {
         return mIntQuantity;
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mIntId);
+        parcel.writeString(mStrName);
+        parcel.writeInt(mIntCalories);
+        parcel.writeInt(mIntCarbs);
+        parcel.writeInt(mIntFats);
+        parcel.writeInt(mIntProtein);
+        parcel.writeInt(mIntVitA);
+        parcel.writeInt(mIntVitB6);
+        parcel.writeInt(mIntVitC);
+        parcel.writeInt(mIntVitD);
+        parcel.writeInt(mIntZinc);
+        parcel.writeInt(mIntMagnesium);
+        parcel.writeInt(mIntIron);
+    }
+
+    public static final Parcelable.Creator<Food> CREATOR
+            = new Parcelable.Creator<Food>() {
+
+        // This simply calls our new constructor (typically private) and
+        // passes along the unmarshalled `Parcel`, and then returns the new object!
+        @Override
+        public Food createFromParcel(Parcel in) {
+            return new  Food(in);
+        }
+
+        // We just need to copy this and change the type to match our class.
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
 }

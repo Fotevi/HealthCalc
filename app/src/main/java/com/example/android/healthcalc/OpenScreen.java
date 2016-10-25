@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class
 
 OpenScreen extends AppCompatActivity implements View.OnClickListener {
@@ -18,6 +21,9 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
     private Context ctx = this;
     private SharedPreferences mSharPref;
     private TextView mTvCalories, mTvNutrients;
+    private String mStrData ;
+    private ArrayList<Food> mArrListDataFromDb;
+    private DatabaseHelper mDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +48,11 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             mBtnGoDiary.setOnClickListener((View.OnClickListener) ctx);
 
             mTvCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories", 0)));
-            mTvNutrients.setText(getResources().getString(R.string.proteins) + " " + String.valueOf(mSharPref.getInt("Protein", 0)));
-            mTvNutrients.append(" \n" + getResources().getString(R.string.carbs) + " " + String.valueOf(mSharPref.getInt("Carbs", 0)));
-            mTvNutrients.append(" \n" + getResources().getString(R.string.fats) + " " + String.valueOf(mSharPref.getInt("Fats", 0)));
+
+            mStrData = java.text.DateFormat.getDateInstance(3).format(new Date());
+            mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
+
+
 
         }
 
@@ -58,6 +66,8 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
         mBtnGoToCalcScreen1 = (Button) findViewById(R.id.btn_open_activity_go_calc);
         mBtnGoDb = (Button) findViewById(R.id.btn_open_activity_go_db);
         mBtnGoDiary = (Button) findViewById(R.id.btn_open_activity_go_diary);
+        mArrListDataFromDb = new ArrayList<Food>();
+        mDatabaseHelper = new DatabaseHelper(this);
     }
 
     @Override
@@ -73,6 +83,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             startActivity(mIntent);
         }else if(view.getId() == R.id.btn_open_activity_go_diary){
             mIntent = new Intent(ctx, DiaryScreen.class);
+            mIntent.putExtra("DataFromDb",mArrListDataFromDb);
             startActivity(mIntent);
         }
     }

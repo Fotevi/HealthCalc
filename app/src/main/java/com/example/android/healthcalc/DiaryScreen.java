@@ -1,10 +1,12 @@
 package com.example.android.healthcalc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +20,7 @@ public class DiaryScreen extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private Context ctx = this;
     private String mCurrentDate;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +29,16 @@ public class DiaryScreen extends AppCompatActivity {
 
         init();
 
+        mIntent = getIntent();
         mCurrentDate = java.text.DateFormat.getDateInstance(3).format(new Date());
-        mArrListDataFromDb = databaseHelper.searchForDiary(mCurrentDate);
-        if (mArrListDataFromDb.size() != 0) {
-            mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
-            mRecyclerView.setAdapter(mAdapter);
-        }
+        mArrListDataFromDb = mIntent.getParcelableArrayListExtra("DataFromDb");
 
+        if(mArrListDataFromDb != null) {
+            if (mArrListDataFromDb.size() != 0) {
+                mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }
     }
 
     public void init(){
@@ -44,7 +50,7 @@ public class DiaryScreen extends AppCompatActivity {
 
         mArrListDataFromDb = new ArrayList<>();
         databaseHelper = new DatabaseHelper(this);
-
+        mIntent = new Intent();
 
     }
 }
