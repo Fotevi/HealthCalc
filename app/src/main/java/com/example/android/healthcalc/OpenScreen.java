@@ -83,7 +83,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             startActivity(mIntent);
         }else if(view.getId() == R.id.btn_open_activity_go_diary){
             mIntent = new Intent(ctx, DiaryScreen.class);
-            mIntent.putExtra("DataFromDb",mArrListDataFromDb);
+            mIntent.putParcelableArrayListExtra("DataFromDb",mArrListDataFromDb);
             startActivity(mIntent);
         }
     }
