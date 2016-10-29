@@ -86,6 +86,7 @@ public class Food implements Parcelable {
         this.mIntZinc = in.readInt();
         this.mIntMagnesium = in.readInt();
         this.mIntIron = in.readInt();
+        this.mIntQuantity=in.readInt();
     }
 
     public int getmIntId() {
@@ -221,6 +222,7 @@ public class Food implements Parcelable {
         parcel.writeInt(mIntZinc);
         parcel.writeInt(mIntMagnesium);
         parcel.writeInt(mIntIron);
+        parcel.writeInt(mIntQuantity);
     }
 
     public static final Parcelable.Creator<Food> CREATOR

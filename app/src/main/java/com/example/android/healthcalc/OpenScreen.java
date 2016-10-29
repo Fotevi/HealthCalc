@@ -16,12 +16,12 @@ public class
 
 OpenScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnGoToCalcScreen1, mBtnHelloLayout , mBtnGoDb, mBtnGoDiary;
+    private Button mBtnGoToCalcScreen1, mBtnHelloLayout, mBtnGoDb, mBtnGoDiary;
     private Intent mIntent;
     private Context ctx = this;
     private SharedPreferences mSharPref;
     private TextView mTvCalories, mTvNutrients;
-    private String mStrData ;
+    private String mStrData;
     private ArrayList<Food> mArrListDataFromDb;
     private DatabaseHelper mDatabaseHelper;
 
@@ -39,7 +39,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             mBtnHelloLayout.setOnClickListener((View.OnClickListener) ctx);
 
         } else {
-        //If there is data in shared prefferences we show the main activity
+            //If there is data in shared prefferences we show the main activity
             setContentView(R.layout.activity_open);
             init();
 
@@ -49,14 +49,17 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
 
             mTvCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories", 0)));
 
-            mStrData = java.text.DateFormat.getDateInstance(3).format(new Date());
-            mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
-
-
 
         }
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mStrData = java.text.DateFormat.getDateInstance(3).format(new Date());
+        mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
     }
 
     protected void init() {
@@ -78,12 +81,12 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
         } else if (view.getId() == R.id.btn_open_activity_go_calc) {
             mIntent = new Intent(ctx, CalcScreen1.class);
             startActivity(mIntent);
-        } else if (view.getId() == R.id.btn_open_activity_go_db){
-            mIntent = new Intent(ctx , DatabaseScreen.class);
+        } else if (view.getId() == R.id.btn_open_activity_go_db) {
+            mIntent = new Intent(ctx, DatabaseScreen.class);
             startActivity(mIntent);
-        }else if(view.getId() == R.id.btn_open_activity_go_diary){
+        } else if (view.getId() == R.id.btn_open_activity_go_diary) {
             mIntent = new Intent(ctx, DiaryScreen.class);
-            mIntent.putParcelableArrayListExtra("DataFromDb",mArrListDataFromDb);
+            mIntent.putParcelableArrayListExtra("DataFromDb", mArrListDataFromDb);
             startActivity(mIntent);
         }
     }
