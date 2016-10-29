@@ -20,7 +20,8 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
     private Intent mIntent;
     private Context ctx = this;
     private SharedPreferences mSharPref;
-    private TextView mTvCalories, mTvNutrients;
+    private TextView mTvMaxCalories,mTvCurrentCalories, mTvMaxProt, mTvCurrentProt,mTvMaxCarbs, mTvCurrentCarbs, mTvMaxFats,mTvCurrentFats;
+    private int mIntCurrentCalories=0, mIntCurrentProt=0, mIntCurrentCarbs=0, mIntCurrentFats=0;
     private String mStrData;
     private ArrayList<Food> mArrListDataFromDb;
     private DatabaseHelper mDatabaseHelper;
@@ -47,7 +48,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             mBtnGoDb.setOnClickListener((View.OnClickListener) ctx);
             mBtnGoDiary.setOnClickListener((View.OnClickListener) ctx);
 
-            mTvCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories", 0)));
+
 
 
         }
@@ -58,14 +59,37 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
-        mStrData = java.text.DateFormat.getDateInstance(3).format(new Date());
-        mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
+        if ((mSharPref.getInt("DailyCalories", 0)) != 0) {
+            mStrData = java.text.DateFormat.getDateInstance(3).format(new Date());
+            mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
+            for(Food food : mArrListDataFromDb){
+                mIntCurrentCalories+=food.getmIntCalories();
+                mIntCurrentProt+=food.getmIntProtein();
+                mIntCurrentCarbs+=food.getmIntCarbs();
+                mIntCurrentFats+=food.getmIntFats();
+            }
+            mTvMaxCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories",0)));
+            mTvCurrentCalories.setText(String.valueOf(mIntCurrentCalories));
+            mTvMaxProt.setText(String.valueOf(mSharPref.getInt("Protein",0)));
+            mTvCurrentProt.setText(String.valueOf(mIntCurrentProt));
+            mTvMaxCarbs.setText(String.valueOf(mSharPref.getInt("Carbs",0)));
+            mTvCurrentCarbs.setText(String.valueOf(mIntCurrentCarbs));
+            mTvMaxFats.setText(String.valueOf(mSharPref.getInt("Fats",0)));
+            mTvCurrentFats.setText(String.valueOf(mIntCurrentFats));
+
+        }
     }
 
     protected void init() {
         //binding the UI elements to variables
-        mTvCalories = (TextView) findViewById(R.id.tv_open_activity_calories);
-        mTvNutrients = (TextView) findViewById(R.id.tv_open_activity_nutrients);
+        mTvMaxCalories=(TextView)findViewById(R.id.tv_open_activity_max_calories);
+        mTvCurrentCalories=(TextView)findViewById(R.id.tv_open_activity_current_calories);
+        mTvMaxProt=(TextView)findViewById(R.id.tv_open_activity_max_proteins);
+        mTvCurrentProt=(TextView)findViewById(R.id.tv_open_activity_current_proteins);
+        mTvMaxCarbs=(TextView)findViewById(R.id.tv_open_activity_max_carbs);
+        mTvCurrentCarbs=(TextView)findViewById(R.id.tv_open_activity_current_carbs);
+        mTvMaxFats=(TextView)findViewById(R.id.tv_open_activity_max_fats);
+        mTvCurrentFats=(TextView)findViewById(R.id.tv_open_activity_current_fats);
         mBtnGoToCalcScreen1 = (Button) findViewById(R.id.btn_open_activity_go_calc);
         mBtnGoDb = (Button) findViewById(R.id.btn_open_activity_go_db);
         mBtnGoDiary = (Button) findViewById(R.id.btn_open_activity_go_diary);
