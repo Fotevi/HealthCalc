@@ -3,8 +3,11 @@ package com.example.android.healthcalc;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.DateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -55,6 +58,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
 
 
     }
+
 
     @Override
     protected void onStart() {
