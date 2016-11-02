@@ -8,16 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
 
-public class DiaryScreen extends AppCompatActivity{
+public class DiaryScreen extends AppCompatActivity {
     private ArrayList<Food> mArrListDataFromDb;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -25,9 +31,12 @@ public class DiaryScreen extends AppCompatActivity{
     private RecyclerView.ItemDecoration mItemDecoration;
     private DatabaseHelper databaseHelper;
     private Context ctx = this;
-    private String mCurrentDate;
+    private String mCurrentDate, mTempDate;
     private Intent mIntent;
     private GestureDetectorCompat mDetector;
+    final static private int SWIPE_DISTANCE_THRESHOLD = 100;
+    final static private int SWIPE_VELOCITY_THRESHOLD = 100;
+    private TextView mTvDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +45,18 @@ public class DiaryScreen extends AppCompatActivity{
 
         init();
 
-        mDetector = new GestureDetectorCompat(this,new MyGestureListener());
+        mDetector = new GestureDetectorCompat(this, new MyGestureListener());
 
+        mCurrentDate = DateFormat.format("dd/MM/yyyy", new Date()).toString();
+
+
+        mTvDate.setText(String.valueOf(mCurrentDate));
 
 
         mIntent = getIntent();
-        mCurrentDate = java.text.DateFormat.getDateInstance(3).format(new Date());
         mArrListDataFromDb = mIntent.getParcelableArrayListExtra("DataFromDb");
 
-        if(mArrListDataFromDb != null) {
+        if (mArrListDataFromDb != null) {
             if (mArrListDataFromDb.size() != 0) {
                 mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
                 mRecyclerView.setAdapter(mAdapter);
@@ -52,7 +64,9 @@ public class DiaryScreen extends AppCompatActivity{
         }
     }
 
-    public void init(){
+    public void init() {
+
+        mTvDate = (TextView) findViewById(R.id.tv_diary_date);
         mItemDecoration = new RecViewItemDecoration();
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_diary_screen);
         mLayoutManager = new LinearLayoutManager(ctx);
@@ -66,7 +80,7 @@ public class DiaryScreen extends AppCompatActivity{
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
@@ -80,11 +94,72 @@ public class DiaryScreen extends AppCompatActivity{
         }
 
         @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
+        public boolean onFling(MotionEvent e1, MotionEvent e2,
                                float velocityX, float velocityY) {
-            Toast.makeText(ctx,"SAAAAAAAAAAAAAA",Toast.LENGTH_SHORT).show();
-            return true;
+            float distanceX = e2.getX() - e1.getX();
+            float distanceY = e2.getY() - e1.getY();
+            if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                if (distanceX > 0)
+                    onSwipeRight();
+                else
+                    onSwipeLeft();
+                return true;
+            }
+            return false;
         }
     }
 
+    private void onSwipeRight() {
+        int februaryDays = 28, day, month, year;
+        day = Integer.valueOf(mCurrentDate.substring(0, 2));
+        if(mCurrentDate.substring(4,5).equals("/")){
+            month = Integer.valueOf(mCurrentDate.substring(3, 4));
+        }else{
+            month = Integer.valueOf(mCurrentDate.substring(3, 5));
+        }
+
+        year = Integer.valueOf(mCurrentDate.substring(6));
+        final int[] leapYears = {2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048};
+        for (int i = 0; i < leapYears.length; i++) {
+            if (year == leapYears[i]) {
+                februaryDays = 29;
+                break;
+            }
+            if ((year < leapYears[i + 1]) && (i != (leapYears.length - 1))) {
+                break;
+            }
+        }
+        int[] intArrayCalendar = {0, 31, februaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        if(day > 1){
+            day--;
+        }else {
+            if (month > 1) {
+                month--;
+                day = intArrayCalendar[month];
+            } else {
+                year--;
+                month = 12;
+                day = intArrayCalendar[month];
+            }
+        }
+        if(day < 10){
+            mTempDate = "0" + String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+        }else{
+            mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+        }
+
+        mCurrentDate = mTempDate;
+        mArrListDataFromDb = databaseHelper.searchForDiary(mTempDate);
+
+        mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
+        mRecyclerView.setAdapter(mAdapter);
+        Toast.makeText(ctx, mTempDate, Toast.LENGTH_LONG).show();
+        mTvDate.setText(mTempDate);
+    }
+
+    private void onSwipeLeft() {
+
+
+    }
 }
