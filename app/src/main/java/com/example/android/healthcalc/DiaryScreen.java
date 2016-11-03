@@ -114,11 +114,13 @@ public class DiaryScreen extends AppCompatActivity {
         day = Integer.valueOf(mCurrentDate.substring(0, 2));
         if(mCurrentDate.substring(4,5).equals("/")){
             month = Integer.valueOf(mCurrentDate.substring(3, 4));
+            year = Integer.valueOf(mCurrentDate.substring(5));
         }else{
             month = Integer.valueOf(mCurrentDate.substring(3, 5));
+            year = Integer.valueOf(mCurrentDate.substring(6));
         }
 
-        year = Integer.valueOf(mCurrentDate.substring(6));
+
         final int[] leapYears = {2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048};
         for (int i = 0; i < leapYears.length; i++) {
             if (year == leapYears[i]) {
