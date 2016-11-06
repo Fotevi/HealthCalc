@@ -2,6 +2,8 @@ package com.example.android.healthcalc;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -55,7 +57,9 @@ public class AddFoodDatabaseScreen extends AppCompatActivity implements View.OnC
         if(view.getId()==R.id.btn_add_in_db_add){
             boolean check=mDatabaseHelper.addItemInFoodTable(mStringFoodName,mIntCalories,mIntProteins,mIntCarbs,mIntFats,0,0,0,0,0,0,0);
             if(check){
+
                 mIntent=new Intent(this,DatabaseScreen.class);
+                mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(mIntent);
             }
             else {

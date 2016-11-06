@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -125,7 +126,7 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
     //gets information from recycler view
     @Override
     public void onItemSelected(int position) {
-        mStrCurrentDate = java.text.DateFormat.getDateInstance(3).format(new Date());
+        mStrCurrentDate = DateFormat.format("dd/MM/yyyy",new Date()).toString();
         mIntFoodId = mArrListDataFromDb.get(position).getmIntId();
         showFoodQuantityDialog();
     }
