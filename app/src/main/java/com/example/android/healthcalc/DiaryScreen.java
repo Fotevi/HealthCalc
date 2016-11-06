@@ -161,7 +161,54 @@ public class DiaryScreen extends AppCompatActivity {
     }
 
     private void onSwipeLeft() {
+        int februaryDays = 28, day, month, year;
+        day = Integer.valueOf(mCurrentDate.substring(0, 2));
+        if(mCurrentDate.substring(4,5).equals("/")){
+            month = Integer.valueOf(mCurrentDate.substring(3, 4));
+            year = Integer.valueOf(mCurrentDate.substring(5));
+        }else{
+            month = Integer.valueOf(mCurrentDate.substring(3, 5));
+            year = Integer.valueOf(mCurrentDate.substring(6));
+        }
 
+
+        final int[] leapYears = {2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048};
+        for (int i = 0; i < leapYears.length; i++) {
+            if (year == leapYears[i]) {
+                februaryDays = 29;
+                break;
+            }
+            if ((year < leapYears[i + 1]) && (i != (leapYears.length - 1))) {
+                break;
+            }
+        }
+        int[] intArrayCalendar = {0, 31, februaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        if(day < intArrayCalendar[month]){
+            day++;
+        }else {
+            if (month < 12) {
+                month++;
+                day = 1;
+            } else {
+                year++;
+                month = 1;
+                day = 1;
+            }
+        }
+        if(day < 10){
+            mTempDate = "0" + String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+        }else{
+            mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+        }
+
+        mCurrentDate = mTempDate;
+        mArrListDataFromDb = databaseHelper.searchForDiary(mTempDate);
+
+        mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
+        mRecyclerView.setAdapter(mAdapter);
+        Toast.makeText(ctx, mTempDate, Toast.LENGTH_LONG).show();
+        mTvDate.setText(mTempDate);
 
     }
 }
