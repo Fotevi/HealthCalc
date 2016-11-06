@@ -12,6 +12,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-public class DiaryScreen extends AppCompatActivity {
+public class DiaryScreen extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<Food> mArrListDataFromDb;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -37,6 +39,7 @@ public class DiaryScreen extends AppCompatActivity {
     final static private int SWIPE_DISTANCE_THRESHOLD = 100;
     final static private int SWIPE_VELOCITY_THRESHOLD = 100;
     private TextView mTvDate;
+    private Button mBtnToPrev, mBtnToNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,10 @@ public class DiaryScreen extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(mItemDecoration);
-
+        mBtnToPrev = (Button) findViewById(R.id.btn_diary_toprev);
+        mBtnToNext = (Button) findViewById(R.id.btn_diary_tonext);
+        mBtnToPrev.setOnClickListener(this);
+        mBtnToNext.setOnClickListener(this);
         mArrListDataFromDb = new ArrayList<>();
         databaseHelper = new DatabaseHelper(this);
         mIntent = new Intent();
@@ -83,6 +89,18 @@ public class DiaryScreen extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_diary_tonext:
+                onSwipeLeft();
+                break;
+            case R.id.btn_diary_toprev:
+                onSwipeRight();
+                break;
+        }
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
