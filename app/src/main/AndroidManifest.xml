@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.healthcalc">
+    package="com.example.android.healthcalc"
+    >
 
     <application
         android:allowBackup="true"
@@ -16,10 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalcScreen1" />
-        <activity android:name=".CalcScreen2" />
+        <activity android:name=".CalcScreen3" />
         <activity android:name=".DatabaseScreen" />
         <activity android:name=".AddFoodDatabaseScreen" />
-        <activity android:name=".DiaryScreen"></activity>
+        <activity android:name=".DiaryScreen" />
+        <activity android:name=".CalcScreen2"></activity>
     </application>
 
 </manifest>

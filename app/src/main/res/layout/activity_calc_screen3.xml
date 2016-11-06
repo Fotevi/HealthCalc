@@ -7,56 +7,55 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.healthcalc.CalcScreen2">
-
+    tools:context=".CalcScreen3">
+    
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/rg_calc_screen2_activity_lvl"
-        android:checkedButton="@+id/rb_calc_screen2_maintenance"
+        android:id="@+id/rg_calc_screen3_activity_lvl"
+        android:checkedButton="@+id/rb_calc_screen3_low"
         >
+        
+        <RadioButton
+            android:id="@+id/rb_calc_screen3_low"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/low"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen3_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/light"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen3_moderate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/moderate"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen3_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/active"
+            />
+        <RadioButton
+            android:id="@+id/rb_calc_screen3_extreme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/extreme"
+            />
 
-        <RadioButton
-            android:id="@+id/rb_calc_screen2_highDef"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/highDef"
-            />
-        <RadioButton
-            android:id="@+id/rb_calc_screen2_lowDef"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lowDef"
-            />
-        <RadioButton
-            android:id="@+id/rb_calc_screen2_maintenance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/maintenance"
-            />
-        <RadioButton
-            android:id="@+id/rb_calc_screen2_lowBulk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lowBulk"
-            />
-        <RadioButton
-            android:id="@+id/rb_calc_screen2_highBulk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/highBulk"
-            />
-
-
+        
 
     </RadioGroup>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_calc_screen2"
-        android:layout_below="@+id/rg_calc_screen2_activity_lvl"
-        android:text="@string/next"/>
-
+        android:id="@+id/btn_calc_screen3"
+        android:layout_below="@+id/rg_calc_screen3_activity_lvl"
+        android:text="@string/calculate"/>
 </RelativeLayout>

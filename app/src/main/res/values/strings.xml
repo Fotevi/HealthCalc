@@ -32,4 +32,9 @@
     <string name="add_food_quantity">Add the amount of food</string>
     <string name="in_grams">(in grams)</string>
     <string name="enter_amount">Enter amount in grams</string>
+    <string name="highDef">Fast fat loss</string>
+    <string name="lowDef">Steady fat loss</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="lowBulk">Steady weight increase</string>
+    <string name="highBulk">Fast weight increase</string>
 </resources>

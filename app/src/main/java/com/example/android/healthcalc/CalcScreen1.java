@@ -16,9 +16,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     private EditText mEtYears, mEtMetersFeet, mEtCmInch, mEtKgLbs;
     private Button mBtnGoToCalcScreen2;
     private Intent mIntentGoToCalcScreen2;
-    private int mIntYears;
-    private float mFloatWeight, mFloatHeight;
-    private boolean mBoolIsMale, mBoolMetrOrImper; //mBoolMetrOrImper true = Metric , false = Imperial
+    private boolean mBoolMetrOrImper; //mBoolMetrOrImper true = Metric , false = Imperial
     private TabLayout mTlMetersFeet, mTlKgLbs, mTlMaleFemale;
 
 
@@ -31,7 +29,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         mEtCmInch = (EditText) findViewById(R.id.et_calc_screen1_sm_inch);
         //Edit Text for weight - kg or lbs
         mEtKgLbs = (EditText) findViewById(R.id.et_calc_screen1_kg_lbs);
-        //Button to go to class CalcScreen2
+        //Button to go to class CalcScreen3
         mBtnGoToCalcScreen2 = (Button) findViewById(R.id.btn_calc_screen1_go_calc_screen2);
         //Tab Layout to choose Meters or Feets
         mTlMetersFeet = (TabLayout) findViewById(R.id.tl_calc_screen1_meters_feet);
@@ -41,7 +39,7 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
         mTlMaleFemale=(TabLayout)findViewById(R.id.tl_calc_screen1_male_female);
 
         //Initial values
-        mBoolIsMale = true;
+        MyApplication.appGender = true;
         mBoolMetrOrImper = true;
     }
 
@@ -65,31 +63,31 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
-        //When mBtnGoToCalcScreen2( id = btn_calc_screen1_go_calc_screen2) is clicked -> go to CalcScreen2.class
+        //When mBtnGoToCalcScreen2( id = btn_calc_screen1_go_calc_screen2) is clicked -> go to CalcScreen3.class
         if (view.getId() == R.id.btn_calc_screen1_go_calc_screen2) {
 
             try {
 
                 if (mBoolMetrOrImper == false) {
                     //If imperial transition data to metric
-                    mFloatWeight =  Integer.valueOf(mEtKgLbs.getText().toString()) * 0.453592f; // weight in kg
-                    mFloatHeight = Integer.valueOf(mEtMetersFeet.getText().toString()) * 30.48f +
+                    MyApplication.appWeight =  Integer.valueOf(mEtKgLbs.getText().toString()) * 0.453592f; // weight in kg
+                    MyApplication.appHeight = Integer.valueOf(mEtMetersFeet.getText().toString()) * 30.48f +
                             Integer.valueOf(mEtCmInch.getText().toString()) * 2.54f; // height in cm
                 } else {
                     //if metric transition meters to cm
-                    mFloatWeight = Integer.valueOf(mEtKgLbs.getText().toString()); // weight in kg
-                    mFloatHeight = Integer.valueOf(mEtMetersFeet.getText().toString())*100 +
+                    MyApplication.appWeight = Integer.valueOf(mEtKgLbs.getText().toString()); // weight in kg
+                    MyApplication.appHeight = Integer.valueOf(mEtMetersFeet.getText().toString())*100 +
                             Integer.valueOf(mEtCmInch.getText().toString()); // height in cm
 
                 }
 
-                mIntYears = Integer.parseInt(mEtYears.getText().toString());
+                MyApplication.appAge = Integer.parseInt(mEtYears.getText().toString());
 
                 mIntentGoToCalcScreen2 = new Intent(ctx, CalcScreen2.class);
-                mIntentGoToCalcScreen2.putExtra("Age",mIntYears);
+                /*mIntentGoToCalcScreen2.putExtra("Age",mIntYears);
                 mIntentGoToCalcScreen2.putExtra("Gender",mBoolIsMale);
                 mIntentGoToCalcScreen2.putExtra("Height", mFloatHeight);
-                mIntentGoToCalcScreen2.putExtra("Weight", mFloatWeight);
+                mIntentGoToCalcScreen2.putExtra("Weight", mFloatWeight);*/
                 //send data and start new activity to get user activity level and to calculate
                 //the daily calorie needs
                 startActivity(mIntentGoToCalcScreen2);
@@ -125,10 +123,10 @@ public class CalcScreen1 extends AppCompatActivity implements View.OnClickListen
             mBoolMetrOrImper = false;
         //Male is selected
         } else if (tab.equals(mTlMaleFemale.getTabAt(0))) {
-            mBoolIsMale = true;
+            MyApplication.appGender = true;
         //Female is selected
         } else if (tab.equals(mTlMaleFemale.getTabAt(1))) {
-            mBoolIsMale = false;
+            MyApplication.appGender = false;
         }
 
     }
