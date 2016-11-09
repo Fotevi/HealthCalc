@@ -6,6 +6,7 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
 
         TextView mTvName, mTvCal, mTvProt, mTvCarbs, mTvFats, mTvVitA, mTvVitB, mTvVitC, mTvVitD,
                 mTvZinc, mTvMagnesium, mTvIron, mTvQuantity;
+        Button btnRvDiary;
         int position;
         LinearLayout mLinearLayout;
 
@@ -54,6 +56,13 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
             mTvIron=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_iron);
             mTvQuantity=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_quantity);
             mLinearLayout = (LinearLayout) itemView.findViewById(R.id.ll_rec_view_diary_expand);
+            btnRvDiary = (Button) itemView.findViewById(R.id.btn_rv_diary);
+            btnRvDiary.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
 

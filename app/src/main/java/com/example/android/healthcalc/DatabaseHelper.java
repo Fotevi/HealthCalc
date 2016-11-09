@@ -276,4 +276,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         //Retrieving the Arraylist filled with data based on the query
         return tempList;
     }
+
+    public void deleteFromDiary(){
+
+    }
 }
