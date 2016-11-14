@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,16 +24,18 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
 
     private IRVdiaryOnClick mListener;
     private String mStringG;
-    private ArrayList<Food> mAdapterData;
+    private static ArrayList<Food> mAdapterData;
     private int mExpandedPosition = -1;
     private RecyclerView mRecyclerView;
+    private DatabaseHelper mDbHelper ;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTvName, mTvCal, mTvProt, mTvCarbs, mTvFats, mTvVitA, mTvVitB, mTvVitC, mTvVitD,
                 mTvZinc, mTvMagnesium, mTvIron, mTvQuantity;
         Button btnRvDiary;
-        int position;
+        int position, id;
         LinearLayout mLinearLayout;
 
         private void getItemPosition(int position){
@@ -60,8 +63,10 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
             btnRvDiary.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                }
+                    FoodInDIary foodInDIary = new FoodInDIary();
+                    foodInDIary = (FoodInDIary) mAdapterData.get(position);
+                   Toast.makeText(view.getContext(),String.valueOf(foodInDIary.getIntIdNutritionTable()),Toast.LENGTH_LONG).show();
+            }
             });
         }
     }
@@ -89,6 +94,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
                 holder.mTvIron.append(" " + String.valueOf(mAdapterData.get(position).getmIntIron()));
                 holder.mTvQuantity.append(" " + String.valueOf(mAdapterData.get(position).getmIntQuantity()) + mStringG);
                 holder.getItemPosition(position);
+
             }
             final int tempPosition = position;
 
@@ -114,7 +120,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_diary_item,parent,false);
 
         ViewHolder vh = new ViewHolder(view);
-
+        mDbHelper = new DatabaseHelper(parent.getContext());
         mRecyclerView = (RecyclerView) parent.findViewById(R.id.rv_diary_screen);
 
         return vh;

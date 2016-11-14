@@ -10,20 +10,20 @@ public class Food implements Parcelable {
 
     //Class maping the columns in Foods database
 
-    private int mIntId;
-    private String mStrName;
-    private int mIntCalories;
-    private int mIntProtein;
-    private int mIntCarbs;
-    private int mIntFats;
-    private int mIntVitA;
-    private int mIntVitB6;
-    private int mIntVitC;
-    private int mIntVitD;
-    private int mIntZinc;
-    private int mIntMagnesium;
-    private int mIntIron;
-    private int mIntQuantity;
+    protected int mIntId;
+    protected String mStrName;
+    protected int mIntCalories;
+    protected int mIntProtein;
+    protected int mIntCarbs;
+    protected int mIntFats;
+    protected int mIntVitA;
+    protected int mIntVitB6;
+    protected int mIntVitC;
+    protected int mIntVitD;
+    protected int mIntZinc;
+    protected int mIntMagnesium;
+    protected int mIntIron;
+    protected int mIntQuantity;
 
     public Food(int mIntId, String mStrName, int mIntCalories, int mIntProtein,
                  int mIntCarbs, int mIntFats, int mIntVitA, int mIntVitB6, int mIntVitC,

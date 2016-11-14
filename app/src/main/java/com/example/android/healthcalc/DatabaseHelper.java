@@ -234,7 +234,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         String[] selectionArgs = {itemDate};
 
         Cursor c = db.query(
-                FoodsDb.FoodInfo.TABLE_NAME + " INNER JOIN " + FoodsDb.DailyNutrition.TABLE_NAME + " ON " + FoodsDb.FoodInfo.ID_COLUMN +
+                FoodsDb.FoodInfo.TABLE_NAME + " INNER JOIN " + FoodsDb.DailyNutrition.TABLE_NAME + " ON " + FoodsDb.FoodInfo.TABLE_NAME + "." + FoodsDb.FoodInfo.ID_COLUMN +
                         "=" + FoodsDb.DailyNutrition.TABLE_NAME + "." + FoodsDb.DailyNutrition.FOODID_COLUMN,
                 null,
                 selection,
@@ -247,7 +247,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         //If the query has results we fill the Food class with info from the db
         if (c.moveToFirst() == true && c != null) {
             do {
-                Food tempFood = new Food();
+                FoodInDIary tempFood = new FoodInDIary();
                 tempFood.setmIntId(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.ID_COLUMN)));
                 tempFood.setmStrName(c.getString(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.NAME_COLUMN)));
                 tempFood.setmIntCalories(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.CALORIES_COLUMN)));
@@ -262,7 +262,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
                 tempFood.setmIntMagnesium(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.MAGNESIUM_COLUMN)));
                 tempFood.setmIntIron(c.getInt(c.getColumnIndexOrThrow(FoodsDb.FoodInfo.IRON_COLUMN)));
                 tempFood.setmIntQuantity(c.getInt(c.getColumnIndexOrThrow(FoodsDb.DailyNutrition.QUANTITY_COLUMN)));
-
+                tempFood.setIntIdNutritionTable(c.getInt(c.getColumnIndexOrThrow(FoodsDb.DailyNutrition.ID_COLUMN)));                /*Create FoodDiary class that extends Food.class to set ID and use it for delte*/
 
                 tempList.add(tempFood);
 
@@ -277,7 +277,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return tempList;
     }
 
-    public void deleteFromDiary(){
+    public void deleteFromDiary(int id){
+        db = this.getReadableDatabase();
 
+        String selection = FoodsDb.DailyNutrition.ID_COLUMN + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        db.delete(FoodsDb.DailyNutrition.TABLE_NAME,selection,selectionArgs);
+        db.close();
     }
 }

@@ -65,6 +65,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
         super.onStart();
         if ((mSharPref.getInt("DailyCalories", 0)) != 0) {
             mStrData = android.text.format.DateFormat.format("dd/MM/yyyy",new Date()).toString();
+            /*TO DO : Try to add logic with temporal list to distinguish when to add prot,cals,etc..*/
             mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
             for(Food food : mArrListDataFromDb){
                 mIntCurrentCalories+=food.getmIntCalories();
