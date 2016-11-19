@@ -43,6 +43,9 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
 
         //databaseHelper.addItemInFoodTable("Test",10,10,10,10,0,0,0,0,0,0,0);
 
+
+        mStrCurrentDate = getIntent().getStringExtra("DateFromDiary");
+
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -126,7 +129,9 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
     //gets information from recycler view
     @Override
     public void onItemSelected(int position) {
-        mStrCurrentDate = DateFormat.format("dd/MM/yyyy",new Date()).toString();
+        if(mStrCurrentDate == null) {
+            mStrCurrentDate = DateFormat.format("dd/MM/yyyy", new Date()).toString();
+        }
         mIntFoodId = mArrListDataFromDb.get(position).getmIntId();
         showFoodQuantityDialog();
     }
@@ -135,5 +140,10 @@ public class DatabaseScreen extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onAddBtnClicked(int quantity) {
         boolean check = databaseHelper.addItemInDailyNutrTable(mIntFoodId, mStrCurrentDate, quantity);
+        mIntent = new Intent(this,DiaryScreen.class);
+        mIntent.putExtra("Date",mStrCurrentDate);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(mIntent);
     }
+
 }

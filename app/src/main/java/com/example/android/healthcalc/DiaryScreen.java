@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -59,6 +62,17 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
         mIntent = getIntent();
         mArrListDataFromDb = mIntent.getParcelableArrayListExtra("DataFromDb");
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(getIntent().hasExtra("Date")){
+            mCurrentDate = getIntent().getStringExtra("Date");
+            mTvDate.setText(mCurrentDate);
+        }
+        mArrListDataFromDb = databaseHelper.searchForDiary(mCurrentDate);
         if (mArrListDataFromDb != null) {
             if (mArrListDataFromDb.size() != 0) {
                 mAdapter = new RecViewAdapterDiary(mArrListDataFromDb);
@@ -83,6 +97,24 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
         databaseHelper = new DatabaseHelper(this);
         mIntent = new Intent();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.diary_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.btn_diary_menu){
+            mIntent = new Intent(this,DatabaseScreen.class);
+            mIntent.putExtra("DateFromDiary",mCurrentDate);
+            startActivity(mIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

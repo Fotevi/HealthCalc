@@ -6,12 +6,14 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Fotev on 10/23/2016.
@@ -27,7 +29,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
     private static ArrayList<Food> mAdapterData;
     private int mExpandedPosition = -1;
     private RecyclerView mRecyclerView;
-    private DatabaseHelper mDbHelper ;
+    private static DatabaseHelper mDbHelper ;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,6 +39,7 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
         Button btnRvDiary;
         int position, id;
         LinearLayout mLinearLayout;
+
 
         private void getItemPosition(int position){
             this.position=position;
@@ -60,15 +63,23 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
             mTvQuantity=(TextView)itemView.findViewById(R.id.tv_rec_view_diary_item_quantity);
             mLinearLayout = (LinearLayout) itemView.findViewById(R.id.ll_rec_view_diary_expand);
             btnRvDiary = (Button) itemView.findViewById(R.id.btn_rv_diary);
-            btnRvDiary.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FoodInDIary foodInDIary = new FoodInDIary();
-                    foodInDIary = (FoodInDIary) mAdapterData.get(position);
-                   Toast.makeText(view.getContext(),String.valueOf(foodInDIary.getIntIdNutritionTable()),Toast.LENGTH_LONG).show();
-            }
-            });
+            /*btnRvDiary.setOnClickListener(this);*/
         }
+
+
+    }
+
+
+    public  void itemRemove(int position){
+        FoodInDIary tempFood = new FoodInDIary();
+        tempFood = (FoodInDIary) mAdapterData.get(position);
+        mDbHelper.deleteFromDiary(tempFood.getIntIdNutritionTable());
+        mAdapterData.remove(position);
+
+        notifyItemChanged(position);
+        notifyItemRangeRemoved(0, mAdapterData.size() + 1);
+        notifyItemRangeChanged(position, mAdapterData.size());
+
     }
 
     public RecViewAdapterDiary(ArrayList<Food> data) {
@@ -78,6 +89,8 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final int finalPosition ;
+        finalPosition = position;
         if(holder!=null){
             if(holder.mTvName.getText().equals("")) {
                 holder.mTvName.setText(mAdapterData.get(position).getmStrName());
@@ -94,6 +107,14 @@ public class RecViewAdapterDiary extends RecyclerView.Adapter<RecViewAdapterDiar
                 holder.mTvIron.append(" " + String.valueOf(mAdapterData.get(position).getmIntIron()));
                 holder.mTvQuantity.append(" " + String.valueOf(mAdapterData.get(position).getmIntQuantity()) + mStringG);
                 holder.getItemPosition(position);
+
+                final RecyclerView.ViewHolder tempholder = holder ;
+                holder.btnRvDiary.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        itemRemove(tempholder.getAdapterPosition());
+                    }
+                });
 
             }
             final int tempPosition = position;

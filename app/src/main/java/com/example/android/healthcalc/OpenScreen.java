@@ -3,11 +3,8 @@ package com.example.android.healthcalc;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.DateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,7 +21,7 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
     private Context ctx = this;
     private SharedPreferences mSharPref;
     private TextView mTvMaxCalories,mTvCurrentCalories, mTvMaxProt, mTvCurrentProt,mTvMaxCarbs, mTvCurrentCarbs, mTvMaxFats,mTvCurrentFats;
-    private int mIntCurrentCalories=0, mIntCurrentProt=0, mIntCurrentCarbs=0, mIntCurrentFats=0;
+    private Float mFloatCurrentCalories, mFloatCurrentProt, mFloatCurrentCarbs, mFloatCurrentFats;
     private String mStrData;
     private ArrayList<Food> mArrListDataFromDb;
     private DatabaseHelper mDatabaseHelper;
@@ -67,20 +64,26 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
             mStrData = android.text.format.DateFormat.format("dd/MM/yyyy",new Date()).toString();
             /*TO DO : Try to add logic with temporal list to distinguish when to add prot,cals,etc..*/
             mArrListDataFromDb = mDatabaseHelper.searchForDiary(mStrData);
+            mFloatCurrentCalories = 0.0f;
+            mFloatCurrentProt = 0.0f;
+            mFloatCurrentCarbs = 0.0f ;
+            mFloatCurrentFats =0.0f;
             for(Food food : mArrListDataFromDb){
-                mIntCurrentCalories+=food.getmIntCalories();
-                mIntCurrentProt+=food.getmIntProtein();
-                mIntCurrentCarbs+=food.getmIntCarbs();
-                mIntCurrentFats+=food.getmIntFats();
+                mFloatCurrentCalories +=(food.getmIntCalories() * food.getmIntQuantity()) / 100.0f;
+                mFloatCurrentProt +=(food.getmIntProtein() * food.getmIntQuantity()) / 100.0f;
+                mFloatCurrentCarbs +=(food.getmIntCarbs() * food.getmIntQuantity()) / 100.0f;
+                mFloatCurrentFats +=(food.getmIntFats() * food.getmIntQuantity()) / 100.0f;
             }
+
+
             mTvMaxCalories.setText(String.valueOf(mSharPref.getInt("DailyCalories",0)));
-            mTvCurrentCalories.setText(String.valueOf(mIntCurrentCalories));
+            mTvCurrentCalories.setText(String.valueOf(mFloatCurrentCalories));
             mTvMaxProt.setText(String.valueOf(mSharPref.getInt("Protein",0)));
-            mTvCurrentProt.setText(String.valueOf(mIntCurrentProt));
+            mTvCurrentProt.setText(String.valueOf(mFloatCurrentProt));
             mTvMaxCarbs.setText(String.valueOf(mSharPref.getInt("Carbs",0)));
-            mTvCurrentCarbs.setText(String.valueOf(mIntCurrentCarbs));
+            mTvCurrentCarbs.setText(String.valueOf(mFloatCurrentCarbs));
             mTvMaxFats.setText(String.valueOf(mSharPref.getInt("Fats",0)));
-            mTvCurrentFats.setText(String.valueOf(mIntCurrentFats));
+            mTvCurrentFats.setText(String.valueOf(mFloatCurrentFats));
 
         }
     }

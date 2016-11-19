@@ -37,4 +37,5 @@
     <string name="maintenance">Maintenance</string>
     <string name="lowBulk">Steady weight increase</string>
     <string name="highBulk">Fast weight increase</string>
+    <string name="addFood">Add food</string>
 </resources>
