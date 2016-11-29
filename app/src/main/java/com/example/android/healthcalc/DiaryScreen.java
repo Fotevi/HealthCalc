@@ -41,7 +41,7 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
     private GestureDetectorCompat mDetector;
     final static private int SWIPE_DISTANCE_THRESHOLD = 100;
     final static private int SWIPE_VELOCITY_THRESHOLD = 100;
-    private TextView mTvDate;
+    private TextView mTvDate , mTvProtein, mTvCarbs, mTvFats, mTvCalories;
     private Button mBtnToPrev, mBtnToNext;
 
     @Override
@@ -79,6 +79,10 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
                 mRecyclerView.setAdapter(mAdapter);
             }
         }
+
+        mTvProtein.append(" " + getIntent().getStringExtra("DailyProtein"));
+        mTvCarbs.append(" " + getIntent().getStringExtra("DailyCarbs"));
+        mTvFats.append(" " + getIntent().getStringExtra("DailyFats"));
     }
 
     public void init() {
@@ -96,7 +100,10 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
         mArrListDataFromDb = new ArrayList<>();
         databaseHelper = new DatabaseHelper(this);
         mIntent = new Intent();
-
+        mTvCalories = (TextView) findViewById(R.id.tv_diary_cal);
+        mTvProtein = (TextView) findViewById(R.id.tv_diary_prot);
+        mTvCarbs = (TextView) findViewById(R.id.tv_diary_carbs);
+        mTvFats = (TextView) findViewById(R.id.tv_diary_fats);
     }
 
     @Override

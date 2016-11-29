@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.healthcalc"
-    >
+    package="com.example.android.healthcalc">
 
     <application
         android:allowBackup="true"
@@ -21,7 +20,8 @@
         <activity android:name=".DatabaseScreen" />
         <activity android:name=".AddFoodDatabaseScreen" />
         <activity android:name=".DiaryScreen" />
-        <activity android:name=".CalcScreen2"></activity>
+        <activity android:name=".CalcScreen2" />
+        <activity android:name=".AddMicrosDatabaseScreen"></activity>
     </application>
 
 </manifest>

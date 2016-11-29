@@ -19,7 +19,7 @@ import android.widget.Toast;
  */
 public class AddFoodDatabaseScreen extends AppCompatActivity implements View.OnClickListener {
     private EditText mEtFoodName, mEtCalories, mEtProteins, mEtCarbs, mEtFats;
-    private Button mBtnAdd;
+    private Button mBtnAdd ,mBtnToMicros;
     private String mStringFoodName;
     private int mIntCalories, mIntProteins, mIntCarbs, mIntFats;
     private DatabaseHelper mDatabaseHelper;
@@ -32,6 +32,7 @@ public class AddFoodDatabaseScreen extends AppCompatActivity implements View.OnC
         init();
 
         mBtnAdd.setOnClickListener(this);
+        mBtnToMicros.setOnClickListener(this);
         mEtFoodName.setText(getIntent().getStringExtra("FoodName"));
     }
 
@@ -43,6 +44,8 @@ public class AddFoodDatabaseScreen extends AppCompatActivity implements View.OnC
         mEtFats=(EditText)findViewById(R.id.et_add_in_db_fats);
         mBtnAdd=(Button)findViewById(R.id.btn_add_in_db_add);
         mDatabaseHelper = new DatabaseHelper(this);
+        mBtnToMicros = (Button) findViewById(R.id.btn_add_vitamins_in_db);
+
     }
 
     @Override
@@ -65,6 +68,15 @@ public class AddFoodDatabaseScreen extends AppCompatActivity implements View.OnC
             else {
                 Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
             }
+        }
+        if(view.getId() == R.id.btn_add_vitamins_in_db){
+            mIntent = new Intent (this,AddMicrosDatabaseScreen.class);
+            mIntent.putExtra("Calories",mIntCalories);
+            mIntent.putExtra("Proteins",mIntProteins);
+            mIntent.putExtra("Carbs",mIntCarbs);
+            mIntent.putExtra("Fats",mIntFats);
+            mIntent.putExtra("Name",mStringFoodName);
+            startActivity(mIntent);
         }
     }
 }

@@ -119,6 +119,10 @@ OpenScreen extends AppCompatActivity implements View.OnClickListener {
         } else if (view.getId() == R.id.btn_open_activity_go_diary) {
             mIntent = new Intent(ctx, DiaryScreen.class);
             mIntent.putParcelableArrayListExtra("DataFromDb", mArrListDataFromDb);
+            mIntent.putExtra("DailyProtein",String.valueOf(mFloatCurrentProt));
+            mIntent.putExtra("DailyCarbs",String.valueOf(mFloatCurrentCarbs));
+            mIntent.putExtra("DailyFats",String.valueOf(mFloatCurrentFats));
+            mIntent.putExtra("DailyCalories",String.valueOf(mFloatCurrentCalories));
             startActivity(mIntent);
         }
     }
