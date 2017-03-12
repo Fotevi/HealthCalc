@@ -203,9 +203,15 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
             }
         }
         if(day < 10){
-            mTempDate = "0" + String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            if(month>10)
+                mTempDate = "0" + String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            else
+                mTempDate = "0" + String.valueOf(day) + "/0" + String.valueOf(month) + "/" + String.valueOf(year);
         }else{
-            mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            if(month>10)
+                mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            else
+                mTempDate =  String.valueOf(day) + "/0" + String.valueOf(month) + "/" + String.valueOf(year);
         }
 
         mCurrentDate = mTempDate;
@@ -254,9 +260,16 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
             }
         }
         if(day < 10){
-            mTempDate = "0" + String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            if(month>10)
+                mTempDate = "0" + String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            else
+                mTempDate = "0" + String.valueOf(day) + "/0" + String.valueOf(month) + "/" + String.valueOf(year);
+
         }else{
-            mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            if(month>10)
+                mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            else
+                mTempDate =  String.valueOf(day) + "/0" + String.valueOf(month) + "/" + String.valueOf(year);
         }
 
         mCurrentDate = mTempDate;
