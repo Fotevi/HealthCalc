@@ -266,7 +266,7 @@ public class DiaryScreen extends AppCompatActivity implements View.OnClickListen
                 mTempDate = "0" + String.valueOf(day) + "/0" + String.valueOf(month) + "/" + String.valueOf(year);
 
         }else{
-            if(month>10)
+            if(month>10)//ss
                 mTempDate =  String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
             else
                 mTempDate =  String.valueOf(day) + "/0" + String.valueOf(month) + "/" + String.valueOf(year);
